@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend-folder",
+  "author": "sssssungs <32057999+sssssungs@users.noreply.github.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "index.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "node index.ts -p 3001",
+    "test": "echo test back"
+  }
+}
