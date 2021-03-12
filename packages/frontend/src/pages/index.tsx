@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export default function Home() {
-  const [text] = useState<string>("ts");
+	const [text, setText] = useState<string>('ts');
 
-  return (
-      <div className="container">
-        <div>
-          <span>{text} 적용 완료</span>
-        </div>
-      </div>
-  );
+	const onClick = () => {
+		console.log('aaa');
+	};
+
+	return (
+		<div className="container">
+			<div>
+				<span>{text} 적용 완료</span>
+			</div>
+		</div>
+	);
 }
