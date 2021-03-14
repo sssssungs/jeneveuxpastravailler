@@ -39,6 +39,7 @@ yarn-error.log*
 
 /packages/backend/dist
 /packages/backend/node_modules
+/packages/backend/ormconfig.json
 
 .idea
 .gitignore
