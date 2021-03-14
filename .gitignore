@@ -37,8 +37,8 @@ yarn-error.log*
 /packages/frontend/dist
 /packages/frontend/node_modules
 
-/packages/nest-app/dist
-/packages/nest-app/node_modules
+/packages/backend/dist
+/packages/backend/node_modules
 
 .idea
 .gitignore

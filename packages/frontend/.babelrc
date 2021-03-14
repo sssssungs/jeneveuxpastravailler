@@ -1,0 +1,13 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    "@babel/plugin-proposal-optional-chaining",
+    [
+      "module-resolver",
+      {
+        "root": ["./src/"],
+        "extensions": [".ts", ".tsx", ".js", ".jsx"]
+      }
+    ]
+  ]
+}
