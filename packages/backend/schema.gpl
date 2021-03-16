@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TaskDto {
+  id: Float!
+  content: String!
+}
+
+type Query {
+  getTasks: [TaskDto!]!
+}
+
+type Mutation {
+  createTask(newData: TaskInput!): TaskDto!
+}
+
+input TaskInput {
+  content: String!
+}

@@ -17,17 +17,17 @@ export class Task {
 	@Column({ nullable: true })
 	category: number;
 
-	@Column()
-	sectionId: number;
-
-	@Column()
-	order: number;
-
-	@Column()
-	status: number;
-
-	@Column()
-	createdBy: string;
+	// @Column()
+	// sectionId: number;
+	//
+	// @Column()
+	// order: number;
+	//
+	// @Column()
+	// status: number;
+	//
+	// @Column()
+	// createdBy: string;
 
 	@CreateDateColumn()
 	createdAt: string;
