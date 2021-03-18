@@ -1,4 +1,3 @@
-// test-utils.js
 import { render } from "@testing-library/react";
 
 const Providers = ({ children }) => {
