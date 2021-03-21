@@ -2,11 +2,16 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import LeftMenu from "./leftMenu";
 
-const CommonLayout = ({ children }) => {
+interface Props {
+	current: string;
+	children?: React.ReactNode;
+}
+
+const CommonLayout = ({ current, children }: Props) => {
 	return (
 		<SiteLayout>
 			<LeftMenuSection>
-				<LeftMenu />
+				<LeftMenu current={current} />
 			</LeftMenuSection>
 			<RightContentsSection>{children}</RightContentsSection>
 		</SiteLayout>
