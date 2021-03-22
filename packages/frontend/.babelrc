@@ -6,6 +6,9 @@
     [
       "module-resolver",
       {
+        "alias": {
+          "public": "./public"
+        },
         "root": ["./src/"],
         "extensions": [".ts", ".tsx", ".js", ".jsx"]
       }

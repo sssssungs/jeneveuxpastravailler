@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import LeftMenu from "./leftMenu";
-import doodles from "../../../public/static/images/open-doodles-laying.png";
+import doodles from "public/static/images/open-doodles-laying.png";
 
 interface Props {
 	current: string;
@@ -45,7 +45,7 @@ const RightContentsSection = styled.div`
 	&:after {
 		content: "";
 		position: absolute;
-		right: 0;
+		right: 15px;
 		bottom: 0;
 		width: 50%;
 		height: 50%;
