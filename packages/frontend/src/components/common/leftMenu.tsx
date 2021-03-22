@@ -1,23 +1,16 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import Link from "next/link";
-import planetIcon from "../../../public/static/images/icons/Planet.png";
-import videoIcon from "../../../public/static/images/icons/Video.png";
-import backpackIcon from "../../../public/static/images/icons/Backpack.png";
+import { route } from "routes";
 
 interface Props {
 	current: string;
 }
 
 const LeftMenu = ({ current }: Props) => {
-	const linkInfo: { icon: string; link: string; as?: string }[] = [
-		{ icon: planetIcon, link: "/", as: "/" },
-		{ icon: videoIcon, link: "/project", as: "/project" },
-		{ icon: backpackIcon, link: "/mySetting", as: "/mySetting" },
-	];
 	return (
 		<LeftMenuList>
-			{linkInfo.map(menu => (
+			{route.map(menu => (
 				<LeftMenuItems key={menu.link} active={menu.link === `/${current}`}>
 					<Link href={menu.link} as={menu.as}>
 						<img src={menu.icon} alt={"a"} width={"100%"} />

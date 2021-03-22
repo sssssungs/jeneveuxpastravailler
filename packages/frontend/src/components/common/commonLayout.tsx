@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import LeftMenu from "./leftMenu";
+import doodles from "../../../public/static/images/open-doodles-laying.png";
 
 interface Props {
 	current: string;
@@ -9,12 +10,14 @@ interface Props {
 
 const CommonLayout = ({ current, children }: Props) => {
 	return (
-		<SiteLayout>
-			<LeftMenuSection>
-				<LeftMenu current={current} />
-			</LeftMenuSection>
-			<RightContentsSection>{children}</RightContentsSection>
-		</SiteLayout>
+		<>
+			<SiteLayout>
+				<LeftMenuSection>
+					<LeftMenu current={current} />
+				</LeftMenuSection>
+				<RightContentsSection>{children}</RightContentsSection>
+			</SiteLayout>
+		</>
 	);
 };
 
@@ -28,6 +31,7 @@ const SiteLayout = styled.div`
 
 const LeftMenuSection = styled.div`
 	width: 100px;
+	height: 100%;
 	position: sticky;
 	border-radius: 10px;
 	box-sizing: border-box;
@@ -36,5 +40,17 @@ const LeftMenuSection = styled.div`
 
 const RightContentsSection = styled.div`
 	padding: 15px;
-	display: block;
+	width: 100%;
+	min-height: 90vh;
+	&:after {
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 50%;
+		height: 50%;
+		background-image: url(${doodles});
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
 `;

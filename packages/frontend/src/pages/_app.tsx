@@ -1,13 +1,39 @@
 import { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
+import Head from "next/head";
 import { useApollo } from "../apollo";
+import { css, Global, ThemeProvider } from "@emotion/react";
+import { Theme, theme } from "styles/theme";
+import { font } from "styles/font";
+
+const global = (theme: Theme) => css`
+	${font};
+	html {
+		font-size: 15px;
+		font-family: "InfinitySans-RegularA1", sans-serif;
+		background-color: ${theme.colors.light.BACKGROUND};
+		color: ${theme.colors.light.G_300};
+	}
+`;
 
 function App({ Component, pageProps }: AppProps) {
 	const apolloClient = useApollo(pageProps.initialApolloState);
 	return (
-		<ApolloProvider client={apolloClient}>
-			<Component {...pageProps} />
-		</ApolloProvider>
+		<>
+			<Head>
+				<meta
+					name="viewport"
+					content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
+				/>
+				<title>Je ne veux pas travailler</title>
+			</Head>
+			<ThemeProvider theme={theme}>
+				<Global styles={theme => global(theme as Theme)} />
+				<ApolloProvider client={apolloClient}>
+					<Component {...pageProps} />
+				</ApolloProvider>
+			</ThemeProvider>
+		</>
 	);
 }
 
