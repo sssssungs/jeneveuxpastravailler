@@ -1,6 +1,7 @@
 export const colors = {
 	dark: {
 		BACKGROUND: "#313131",
+		SHADOW: "#F8F8F8",
 		G_100: "#F0F0F0",
 		G_200: "#DFE1E2",
 		G_300: "#A9AEB1",
@@ -19,6 +20,7 @@ export const colors = {
 	},
 	light: {
 		BACKGROUND: "#FFFFFF",
+		SHADOW: "#D3D3D3",
 		G_100: "#71767A",
 		G_200: "#565C65",
 		G_300: "#2C3138",
@@ -37,18 +39,26 @@ export const colors = {
 	},
 };
 
-export interface Theme {
+export type Theme = {
 	colors: typeof colors;
 	size: {
 		[key: string]: number;
 	};
-}
+	spacing: {
+		[key: string]: string;
+	};
+};
 
 export const theme: Theme = {
-	colors,
+	colors: colors,
 	size: {
 		m: 768,
 		l: 992,
 		xl: 1200,
+	},
+	spacing: {
+		m: "5px",
+		l: "7px",
+		xl: "12px",
 	},
 };
