@@ -15,6 +15,8 @@ const global = (theme: Theme) => css`
 		background-color: ${theme.colors.light.BACKGROUND};
 		color: ${theme.colors.light.G_300};
 	}
+
+	textarea,
 	button {
 		font-family: "InfinitySans-RegularA1", sans-serif;
 		outline: 0;

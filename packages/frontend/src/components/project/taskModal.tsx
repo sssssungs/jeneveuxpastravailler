@@ -3,15 +3,27 @@ import * as React from "react";
 
 interface Props {
 	setModal: (value: boolean) => () => void;
+	content: string;
+	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	addNewTask: () => void;
 }
 
-const TaskModal = ({ setModal }: Props) => {
+const TaskModal = ({ setModal, onChange, content = "", addNewTask }: Props) => {
+	const ref = React.useRef<HTMLTextAreaElement>(null);
+	React.useEffect(() => {
+		ref.current.blur();
+	}, []);
+
+	const onClickSave = () => {
+		addNewTask?.();
+	};
+
 	return (
 		<TaskModalWrapper>
 			<TaskTitle>Add New Task</TaskTitle>
-			<TaskContent />
+			<TaskContent ref={ref} onChange={onChange} value={content} />
 			<TaskModalBottom>
-				<SaveButton>Save</SaveButton>
+				<SaveButton onClick={onClickSave}>Save</SaveButton>
 				<CancelButton onClick={setModal(false)}>Cancel</CancelButton>
 			</TaskModalBottom>
 		</TaskModalWrapper>
@@ -35,6 +47,8 @@ const TaskContent = styled.textarea`
 	width: 98%;
 	height: 70%;
 	resize: none;
+	padding: ${props => props.theme.spacing.m};
+	border-radius: ${props => props.theme.spacing.m};
 	border: 1px solid ${props => props.theme.colors.light.SHADOW};
 `;
 
