@@ -4,13 +4,31 @@ import { GET_TASKS } from "../graphql/task/query/getTasks";
 import { addApolloState, initializeApollo } from "apollo";
 import { TaskDto } from "generated/graphql";
 import TaskCard from "components/project/taskCard";
+import { Modal } from "react-responsive-modal";
+import TaskModal from "../components/project/taskModal";
 
 const Project = initialState => {
 	const { data } = initialState;
+	const [modalOpen, setModalOpen] = React.useState(false);
+
+	const setModal = (value: boolean) => () => {
+		setModalOpen(value);
+	};
+
 	return (
 		<CommonLayout current={"project"}>
-			{data.getTasks?.map(task => (
-				<TaskCard task={task} />
+			<button onClick={setModal(true)}>new task</button>
+			<Modal
+				open={modalOpen}
+				onClose={setModal(false)}
+				closeOnOverlayClick
+				center
+				showCloseIcon={false}
+			>
+				<TaskModal setModal={setModal} />
+			</Modal>
+			{data.getTasks?.map((task, index) => (
+				<TaskCard task={task} key={index} />
 			))}
 		</CommonLayout>
 	);

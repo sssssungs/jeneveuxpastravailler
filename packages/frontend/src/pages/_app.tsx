@@ -5,6 +5,7 @@ import { useApollo } from "../apollo";
 import { css, Global, ThemeProvider } from "@emotion/react";
 import { Theme, theme } from "styles/theme";
 import { font } from "styles/font";
+import "react-responsive-modal/styles.css";
 
 const global = (theme: Theme) => css`
 	${font};
@@ -13,6 +14,11 @@ const global = (theme: Theme) => css`
 		font-family: "InfinitySans-RegularA1", sans-serif;
 		background-color: ${theme.colors.light.BACKGROUND};
 		color: ${theme.colors.light.G_300};
+	}
+	button {
+		font-family: "InfinitySans-RegularA1", sans-serif;
+		outline: 0;
+		border: 0;
 	}
 `;
 
