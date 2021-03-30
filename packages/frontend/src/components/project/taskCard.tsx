@@ -65,6 +65,10 @@ const TaskCardWrapper = styled.div`
 	border: 1px solid ${props => props.theme.colors.light.G_100};
 	margin-bottom: 15px;
 	box-shadow: 2px 2px 5px ${props => props.theme.colors.light.SHADOW};
+	&:hover {
+		cursor: pointer;
+		box-shadow: 2px 2px 5px ${props => props.theme.colors.light.B_200};
+	}
 	&:last-of-type {
 		margin-bottom: 0;
 	}
