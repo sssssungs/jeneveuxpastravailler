@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import * as React from "react";
-import Link from "next/link";
-import { route } from "routes";
+import styled from '@emotion/styled';
+import * as React from 'react';
+import Link from 'next/link';
+import { route } from 'routes';
 
 interface Props {
 	current: string;
@@ -13,7 +13,7 @@ const LeftMenu = ({ current }: Props) => {
 			{route.map(menu => (
 				<LeftMenuItems key={menu.link} active={menu.link === `/${current}`}>
 					<Link href={menu.link} as={menu.as}>
-						<img src={menu.icon} alt={"a"} width={"100%"} />
+						<img src={menu.icon} alt={'a'} width={'100%'} />
 					</Link>
 				</LeftMenuItems>
 			))}
@@ -37,7 +37,7 @@ const LeftMenuItems = styled.li<{ active: boolean }>`
 	margin-top: 10px;
 	box-sizing: border-box;
 	border-radius: 10px;
-	box-shadow: ${props => props.active && "2px 2px 5px lightgrey"};
+	box-shadow: ${props => props.active && '2px 2px 5px lightgrey'};
 	&:hover {
 		cursor: pointer;
 		box-shadow: 2px 2px 5px lightgrey;

@@ -1,21 +1,26 @@
-import styled from "@emotion/styled";
-import * as React from "react";
+import styled from '@emotion/styled';
+import * as React from 'react';
 
 interface Props {
 	setModal: (value: boolean) => () => void;
 	content: string;
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	addNewTask: () => void;
+	onSave: () => void;
+	onClose: () => void;
 }
 
-const TaskModal = ({ setModal, onChange, content = "", addNewTask }: Props) => {
+const TaskModal = ({ setModal, onChange, content = '', onSave, onClose }: Props) => {
 	const ref = React.useRef<HTMLTextAreaElement>(null);
 	React.useEffect(() => {
 		ref.current.blur();
 	}, []);
 
 	const onClickSave = () => {
-		addNewTask?.();
+		onSave?.();
+	};
+
+	const onClickClose = () => {
+		onClose?.();
 	};
 
 	return (
@@ -24,7 +29,7 @@ const TaskModal = ({ setModal, onChange, content = "", addNewTask }: Props) => {
 			<TaskContent ref={ref} onChange={onChange} value={content} />
 			<TaskModalBottom>
 				<SaveButton onClick={onClickSave}>Save</SaveButton>
-				<CancelButton onClick={setModal(false)}>Cancel</CancelButton>
+				<CancelButton onClick={onClickClose}>Cancel</CancelButton>
 			</TaskModalBottom>
 		</TaskModalWrapper>
 	);

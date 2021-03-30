@@ -1,17 +1,17 @@
-import { useMemo } from "react";
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import _merge from "lodash/merge";
-import { NormalizedCacheObject } from "apollo-boost";
-import { GRAPHQL_API } from "./config/graphqlApi";
+import { useMemo } from 'react';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import _merge from 'lodash/merge';
+import { NormalizedCacheObject } from 'apollo-boost';
+import { GRAPHQL_API } from './config/graphqlApi';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> = null;
 
 function createApolloClient() {
 	return new ApolloClient({
-		ssrMode: typeof window === "undefined",
+		ssrMode: typeof window === 'undefined',
 		link: new HttpLink({
 			uri: GRAPHQL_API, // 서버 URL (상대 주소가 아닌 절대 주소를 써야한다.)
-			credentials: "same-origin", // `credentials`나 `headers`같은 추가적 fetch() 옵션
+			credentials: 'same-origin', // `credentials`나 `headers`같은 추가적 fetch() 옵션
 		}),
 		cache: new InMemoryCache(), // store -> ㄷㅓ 알아보기
 	});
@@ -29,20 +29,19 @@ export function initializeApollo(initialState = null) {
 		_apolloClient.cache.restore(data);
 	}
 	// SSG(Server Side Generation)와 SSR(Server Side Rendering)은 항상 새로운 Apollo Client를 생성한다.
-	if (typeof window === "undefined") return _apolloClient;
+	if (typeof window === 'undefined') return _apolloClient;
 	// 클라이언트의 Apollo Client는 한 번만 생성한다.
 	if (!apolloClient) apolloClient = _apolloClient;
 	return _apolloClient;
 }
+
 export function useApollo(initialState) {
 	return useMemo(() => initializeApollo(initialState), [initialState]);
 }
-export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-export function addApolloState<T>(
-	client: ApolloClient<NormalizedCacheObject>,
-	pageProps: { props: { data: T } },
-) {
+export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
+
+export function addApolloState<T>(client: ApolloClient<NormalizedCacheObject>, pageProps: any) {
 	if (pageProps?.props) {
 		pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
 	}
