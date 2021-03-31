@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 interface Props {
+	title: string;
 	setModal: (value: boolean) => () => void;
 	content: string;
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -9,7 +10,7 @@ interface Props {
 	onClose: () => void;
 }
 
-const TaskModal = ({ setModal, onChange, content = '', onSave, onClose }: Props) => {
+const TaskModal = ({ title, setModal, onChange, content = '', onSave, onClose }: Props) => {
 	const ref = React.useRef<HTMLTextAreaElement>(null);
 	React.useEffect(() => {
 		ref.current.blur();
@@ -25,7 +26,7 @@ const TaskModal = ({ setModal, onChange, content = '', onSave, onClose }: Props)
 
 	return (
 		<TaskModalWrapper>
-			<TaskTitle>Add New Task</TaskTitle>
+			<TaskTitle>{title}</TaskTitle>
 			<TaskContent ref={ref} onChange={onChange} value={content} />
 			<TaskModalBottom>
 				<SaveButton onClick={onClickSave}>Save</SaveButton>

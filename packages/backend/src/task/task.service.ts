@@ -16,4 +16,11 @@ export class TaskService {
 	getTasks = async () => {
 		return await this.taskRepository.find();
 	};
+
+	updateTask = async (newData: TaskDto) => {
+		console.log('update data', newData);
+		const newTask = await this.taskRepository.findOne(newData.id);
+		newTask.content = newData.content;
+		return await this.taskRepository.save(newTask);
+	};
 }

@@ -3,9 +3,10 @@ import CommonLayout from '../components/common/commonLayout';
 import { GET_TASKS } from '../graphql/task/query/getTasks';
 import { addApolloState, initializeApollo } from 'apollo';
 import { useCreateTaskMutation, useGetTasksQuery } from 'generated/graphql';
-import TaskCard from 'components/project/taskCard';
+import TaskCard, { TaskCardWrapper } from 'components/project/taskCard';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from '../components/project/taskModal';
+import AddButton from '../components/project/addButton';
 
 const Project = () => {
 	const { data } = useGetTasksQuery();
@@ -23,9 +24,7 @@ const Project = () => {
 	const resetContent = () => {
 		setModalOpen(false);
 		// for modal close animation
-		setInterval(() => {
-			setContent('');
-		}, 300);
+		setContent('');
 	};
 
 	const addNewTask = async () => {
@@ -39,7 +38,6 @@ const Project = () => {
 
 	return (
 		<CommonLayout current={'project'}>
-			<button onClick={setModal(true)}>new task</button>
 			<Modal
 				open={modalOpen}
 				onClose={resetContent}
@@ -48,6 +46,7 @@ const Project = () => {
 				showCloseIcon={false}
 			>
 				<TaskModal
+					title={'Add New Task'}
 					content={content}
 					setModal={setModal}
 					onChange={onChange}
@@ -55,6 +54,7 @@ const Project = () => {
 					onClose={resetContent}
 				/>
 			</Modal>
+			<AddButton onClick={setModal} />
 			{data?.getTasks?.map((task, index) => (
 				<TaskCard task={task} key={index} />
 			))}
@@ -67,7 +67,6 @@ export default Project;
 export const getServerSideProps = async () => {
 	const apolloClient = initializeApollo();
 	await apolloClient.query({ query: GET_TASKS });
-	console.log('apolloClient', apolloClient);
 	return addApolloState(apolloClient, {
 		props: {},
 	});

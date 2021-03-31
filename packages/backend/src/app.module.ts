@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TaskModule } from './task/task.module';
@@ -17,7 +15,5 @@ import { join } from 'path';
 		}),
 		TaskModule,
 	],
-	controllers: [AppController],
-	providers: [AppService],
 })
 export class AppModule {}
