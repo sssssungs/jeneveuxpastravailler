@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 interface Props {
-	onClick: (value: boolean) => () => void;
+	onClick: (value: boolean) => void;
 }
 
 const AddButton = ({ onClick }: Props) => {

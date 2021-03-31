@@ -14,6 +14,7 @@ type Query {
 type Mutation {
   createTask(newData: TaskInput!): TaskDto!
   updateTask(newData: TaskUpdateInput!): TaskDto!
+  deleteTask(id: Float!): TaskDto!
 }
 
 input TaskInput {

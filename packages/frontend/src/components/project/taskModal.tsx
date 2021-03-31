@@ -3,14 +3,24 @@ import * as React from 'react';
 
 interface Props {
 	title: string;
-	setModal: (value: boolean) => () => void;
+	setModal: (value: boolean) => void;
 	content: string;
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onSave: () => void;
 	onClose: () => void;
+	showDelete?: boolean;
+	onDelete?: () => void;
 }
 
-const TaskModal = ({ title, setModal, onChange, content = '', onSave, onClose }: Props) => {
+const TaskModal = ({
+	title,
+	onChange,
+	content = '',
+	onSave,
+	onClose,
+	showDelete,
+	onDelete,
+}: Props) => {
 	const ref = React.useRef<HTMLTextAreaElement>(null);
 	React.useEffect(() => {
 		ref.current.blur();
@@ -24,6 +34,10 @@ const TaskModal = ({ title, setModal, onChange, content = '', onSave, onClose }:
 		onClose?.();
 	};
 
+	const onClickDelete = () => {
+		onDelete?.();
+	};
+
 	return (
 		<TaskModalWrapper>
 			<TaskTitle>{title}</TaskTitle>
@@ -31,6 +45,7 @@ const TaskModal = ({ title, setModal, onChange, content = '', onSave, onClose }:
 			<TaskModalBottom>
 				<SaveButton onClick={onClickSave}>Save</SaveButton>
 				<CancelButton onClick={onClickClose}>Cancel</CancelButton>
+				{showDelete && <DeleteButton onClick={onClickDelete}>Delete</DeleteButton>}
 			</TaskModalBottom>
 		</TaskModalWrapper>
 	);
@@ -69,6 +84,7 @@ const SaveButton = styled.button`
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
 	background-color: ${props => props.theme.colors.dark.B_200};
+	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
 		color: ${props => props.theme.colors.light.BACKGROUND};
@@ -82,9 +98,24 @@ const CancelButton = styled.button`
 	border-radius: ${props => props.theme.spacing.m};
 	background-color: ${props => props.theme.colors.dark.R_200};
 	margin-left: ${props => props.theme.spacing.m};
+	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
 		color: ${props => props.theme.colors.light.BACKGROUND};
 		background-color: ${props => props.theme.colors.light.R_100};
+	}
+`;
+
+const DeleteButton = styled.button`
+	width: 100px;
+	height: 30px;
+	border-radius: ${props => props.theme.spacing.m};
+	background-color: ${props => props.theme.colors.dark.O_200};
+	margin-left: ${props => props.theme.spacing.m};
+	text-transform: uppercase;
+	&:hover {
+		cursor: pointer;
+		color: ${props => props.theme.colors.light.BACKGROUND};
+		background-color: ${props => props.theme.colors.light.O_100};
 	}
 `;

@@ -17,7 +17,7 @@ const Project = () => {
 		refetchQueries: [{ query: GET_TASKS }],
 	});
 
-	const setModal = (value: boolean) => () => {
+	const setModal = (value: boolean) => {
 		setModalOpen(value);
 	};
 
@@ -52,6 +52,7 @@ const Project = () => {
 					onChange={onChange}
 					onSave={addNewTask}
 					onClose={resetContent}
+					showDelete={false}
 				/>
 			</Modal>
 			<AddButton onClick={setModal} />

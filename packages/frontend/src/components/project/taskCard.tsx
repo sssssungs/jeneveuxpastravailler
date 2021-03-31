@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { TaskDto, useCreateTaskMutation, useUpdateTaskMutation } from 'generated/graphql';
+import {
+	TaskDto,
+	useCreateTaskMutation,
+	useDeleteTaskMutation,
+	useUpdateTaskMutation,
+} from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
 import { GET_TASKS } from '../../graphql/task/query/getTasks';
@@ -11,6 +16,9 @@ interface Props {
 
 const TaskCard = ({ task }: Props) => {
 	const [updateTaskMutation] = useUpdateTaskMutation({
+		refetchQueries: [{ query: GET_TASKS }],
+	});
+	const [deleteTaskMutation] = useDeleteTaskMutation({
 		refetchQueries: [{ query: GET_TASKS }],
 	});
 	const [modalOpen, setModalOpen] = React.useState(false);
@@ -35,6 +43,11 @@ const TaskCard = ({ task }: Props) => {
 		resetContent();
 	};
 
+	const deleteTask = async () => {
+		await deleteTaskMutation({ variables: { id: task.id } });
+		resetContent();
+	};
+
 	return (
 		<>
 			<TaskCardWrapper modalOpen={modalOpen} onClick={setModal(true)}>
@@ -54,6 +67,8 @@ const TaskCard = ({ task }: Props) => {
 					onChange={onChange}
 					onSave={updateTask}
 					onClose={resetContent}
+					showDelete
+					onDelete={deleteTask}
 				/>
 			</Modal>
 		</>

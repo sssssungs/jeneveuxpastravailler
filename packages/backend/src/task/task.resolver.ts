@@ -21,4 +21,9 @@ export class TaskResolver {
 	async updateTask(@Args('newData') newData: TaskUpdateInput) {
 		return await this.taskService.updateTask(newData);
 	}
+
+	@Mutation(() => TaskDto)
+	async deleteTask(@Args('id') id: number) {
+		return await this.taskService.deleteTask(id);
+	}
 }
