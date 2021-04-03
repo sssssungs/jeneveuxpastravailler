@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { TaskService } from './task.service';
 import { TaskDto } from './task.dto';
-import { TaskInput, TaskUpdateInput } from './task.input';
+import { TaskChange, TaskInput, TaskUpdateInput } from './task.input';
 
 @Resolver()
 export class TaskResolver {
@@ -22,8 +22,13 @@ export class TaskResolver {
 		return await this.taskService.updateTaskContent(newData);
 	}
 
-	@Mutation(() => TaskDto)
+	@Mutation(() => Boolean)
 	async deleteTask(@Args('id') id: number) {
 		return await this.taskService.deleteTask(id);
+	}
+
+	@Mutation(() => TaskDto)
+	async changeTaskOrder(@Args('changeObject') changeObject: TaskChange) {
+		// return await this.taskService.deleteTask(id);
 	}
 }

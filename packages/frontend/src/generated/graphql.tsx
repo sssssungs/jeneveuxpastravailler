@@ -31,7 +31,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createTask: TaskDto;
   updateTaskContent: TaskDto;
-  deleteTask: TaskDto;
+  deleteTask: Scalars['Boolean'];
+  changeTaskOrder: TaskDto;
 };
 
 
@@ -49,6 +50,11 @@ export type MutationDeleteTaskArgs = {
   id: Scalars['Float'];
 };
 
+
+export type MutationChangeTaskOrderArgs = {
+  changeObject: TaskChange;
+};
+
 export type TaskInput = {
   content: Scalars['String'];
   sectionId: Scalars['Float'];
@@ -58,6 +64,29 @@ export type TaskUpdateInput = {
   id: Scalars['Float'];
   content: Scalars['String'];
 };
+
+export type TaskChange = {
+  selectId: Scalars['Float'];
+  selectOrder: Scalars['Float'];
+  targetId: Scalars['Float'];
+  targetOrder: Scalars['Float'];
+};
+
+export type ChangeTaskOrderMutationVariables = Exact<{
+  selectId: Scalars['Float'];
+  selectOrder: Scalars['Float'];
+  targetId: Scalars['Float'];
+  targetOrder: Scalars['Float'];
+}>;
+
+
+export type ChangeTaskOrderMutation = (
+  { __typename?: 'Mutation' }
+  & { changeTaskOrder: (
+    { __typename?: 'TaskDto' }
+    & Pick<TaskDto, 'id' | 'content'>
+  ) }
+);
 
 export type CreateTaskMutationVariables = Exact<{
   content: Scalars['String'];
@@ -80,10 +109,7 @@ export type DeleteTaskMutationVariables = Exact<{
 
 export type DeleteTaskMutation = (
   { __typename?: 'Mutation' }
-  & { deleteTask: (
-    { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'content'>
-  ) }
+  & Pick<Mutation, 'deleteTask'>
 );
 
 export type UpdateTaskContentMutationVariables = Exact<{
@@ -112,6 +138,45 @@ export type GetTasksQuery = (
 );
 
 
+export const ChangeTaskOrderDocument = gql`
+    mutation ChangeTaskOrder($selectId: Float!, $selectOrder: Float!, $targetId: Float!, $targetOrder: Float!) {
+  changeTaskOrder(
+    changeObject: {selectId: $selectId, selectOrder: $selectOrder, targetId: $targetId, targetOrder: $targetOrder}
+  ) {
+    id
+    content
+  }
+}
+    `;
+export type ChangeTaskOrderMutationFn = Apollo.MutationFunction<ChangeTaskOrderMutation, ChangeTaskOrderMutationVariables>;
+
+/**
+ * __useChangeTaskOrderMutation__
+ *
+ * To run a mutation, you first call `useChangeTaskOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeTaskOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeTaskOrderMutation, { data, loading, error }] = useChangeTaskOrderMutation({
+ *   variables: {
+ *      selectId: // value for 'selectId'
+ *      selectOrder: // value for 'selectOrder'
+ *      targetId: // value for 'targetId'
+ *      targetOrder: // value for 'targetOrder'
+ *   },
+ * });
+ */
+export function useChangeTaskOrderMutation(baseOptions?: Apollo.MutationHookOptions<ChangeTaskOrderMutation, ChangeTaskOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeTaskOrderMutation, ChangeTaskOrderMutationVariables>(ChangeTaskOrderDocument, options);
+      }
+export type ChangeTaskOrderMutationHookResult = ReturnType<typeof useChangeTaskOrderMutation>;
+export type ChangeTaskOrderMutationResult = Apollo.MutationResult<ChangeTaskOrderMutation>;
+export type ChangeTaskOrderMutationOptions = Apollo.BaseMutationOptions<ChangeTaskOrderMutation, ChangeTaskOrderMutationVariables>;
 export const CreateTaskDocument = gql`
     mutation CreateTask($content: String!, $sectionId: Float!) {
   createTask(newData: {content: $content, sectionId: $sectionId}) {
@@ -150,9 +215,7 @@ export type CreateTaskMutationResult = Apollo.MutationResult<CreateTaskMutation>
 export type CreateTaskMutationOptions = Apollo.BaseMutationOptions<CreateTaskMutation, CreateTaskMutationVariables>;
 export const DeleteTaskDocument = gql`
     mutation DeleteTask($id: Float!) {
-  deleteTask(id: $id) {
-    content
-  }
+  deleteTask(id: $id)
 }
     `;
 export type DeleteTaskMutationFn = Apollo.MutationFunction<DeleteTaskMutation, DeleteTaskMutationVariables>;

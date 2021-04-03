@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class TaskDto {
@@ -9,5 +9,5 @@ export class TaskDto {
 	@Field()
 	readonly sectionId!: number;
 	@Field()
-	readonly order: number;
+	order: number;
 }

@@ -37,10 +37,10 @@ const Project = () => {
 		setContent(e.target.value);
 	};
 
-	const dragStart = e => {
-		const { newDraggableIndex, newIndex, oldDraggableIndex, oldIndex } = e;
-		console.log('이전 ', oldIndex, '바뀐것 ', newIndex);
-	};
+	// const dragStart = e => {
+	// 	const { newDraggableIndex, newIndex, oldDraggableIndex, oldIndex } = e;
+	// 	console.log('이전 ', oldIndex, '바뀐것 ', newIndex);
+	// };
 
 	const dragEnd = e => {
 		const { newDraggableIndex, newIndex, oldDraggableIndex, oldIndex } = e;
@@ -76,8 +76,8 @@ const Project = () => {
 					fallbackOnBody={true}
 					forceFallback={true}
 					dragClass="dragging"
-					onStart={dragStart}
-					onEnd={dragEnd}
+					// onStart={dragStart}
+					onSort={dragEnd}
 				>
 					{data?.getTasks?.map((task, index) => (
 						<TaskCard task={task} key={index} />

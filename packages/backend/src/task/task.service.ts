@@ -20,7 +20,7 @@ export class TaskService {
 	};
 
 	getTasks = async () => {
-		return await this.taskRepository.find({ order: { createdAt: 'DESC' } });
+		return await this.taskRepository.find({ order: { order: 'DESC' } });
 	};
 
 	updateTaskContent = async (newData: TaskUpdateInput) => {
@@ -31,6 +31,6 @@ export class TaskService {
 
 	deleteTask = async (id: number) => {
 		const foundTask = await this.taskRepository.findOne(id);
-		return await this.taskRepository.remove(foundTask);
+		await this.taskRepository.remove(foundTask);
 	};
 }

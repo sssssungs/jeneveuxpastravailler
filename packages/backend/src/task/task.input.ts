@@ -15,3 +15,15 @@ export class TaskUpdateInput {
 	@Field()
 	readonly content: string;
 }
+
+@InputType()
+export class TaskChange {
+	@Field()
+	readonly selectId!: number;
+	@Field()
+	readonly selectOrder!: number;
+	@Field()
+	readonly targetId!: number;
+	@Field()
+	readonly targetOrder!: number;
+}
