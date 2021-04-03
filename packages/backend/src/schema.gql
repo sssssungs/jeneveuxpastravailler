@@ -5,6 +5,8 @@
 type TaskDto {
   id: Float!
   content: String!
+  sectionId: Float!
+  order: Float!
 }
 
 type Query {
@@ -13,12 +15,13 @@ type Query {
 
 type Mutation {
   createTask(newData: TaskInput!): TaskDto!
-  updateTask(newData: TaskUpdateInput!): TaskDto!
+  updateTaskContent(newData: TaskUpdateInput!): TaskDto!
   deleteTask(id: Float!): TaskDto!
 }
 
 input TaskInput {
   content: String!
+  sectionId: Float!
 }
 
 input TaskUpdateInput {

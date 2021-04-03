@@ -4,6 +4,8 @@ import { InputType, Field } from '@nestjs/graphql';
 export class TaskInput {
 	@Field()
 	readonly content!: string;
+	@Field()
+	readonly sectionId!: number;
 }
 
 @InputType()

@@ -18,8 +18,8 @@ export class TaskResolver {
 	}
 
 	@Mutation(() => TaskDto)
-	async updateTask(@Args('newData') newData: TaskUpdateInput) {
-		return await this.taskService.updateTask(newData);
+	async updateTaskContent(@Args('newData') newData: TaskUpdateInput) {
+		return await this.taskService.updateTaskContent(newData);
 	}
 
 	@Mutation(() => TaskDto)

@@ -1,11 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import {
-	TaskDto,
-	useCreateTaskMutation,
-	useDeleteTaskMutation,
-	useUpdateTaskMutation,
-} from 'generated/graphql';
+import { TaskDto, useDeleteTaskMutation, useUpdateTaskContentMutation } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
 import { GET_TASKS } from '../../graphql/task/query/getTasks';
@@ -15,7 +10,7 @@ interface Props {
 }
 
 const TaskCard = ({ task }: Props) => {
-	const [updateTaskMutation] = useUpdateTaskMutation({
+	const [updateTaskMutation] = useUpdateTaskContentMutation({
 		refetchQueries: [{ query: GET_TASKS }],
 	});
 	const [deleteTaskMutation] = useDeleteTaskMutation({
@@ -38,7 +33,7 @@ const TaskCard = ({ task }: Props) => {
 		setContent(e.target.value);
 	};
 
-	const updateTask = async () => {
+	const updateTaskContent = async () => {
 		await updateTaskMutation({ variables: { id: task.id, content } });
 		resetContent();
 	};
@@ -65,7 +60,7 @@ const TaskCard = ({ task }: Props) => {
 					content={content}
 					setModal={setModal}
 					onChange={onChange}
-					onSave={updateTask}
+					onSave={updateTaskContent}
 					onClose={resetContent}
 					showDelete
 					onDelete={deleteTask}
@@ -85,6 +80,7 @@ export const TaskCardWrapper = styled.div<{ modalOpen: boolean }>`
 	white-space: normal;
 	word-break: break-all;
 	overflow-y: auto;
+	background-color: ${props => props.theme.colors.light.BACKGROUND};
 	padding: ${props => props.theme.spacing.m};
 	border-radius: ${props => props.theme.spacing.m};
 	border: 1px solid ${props => props.theme.colors.light.G_100};
