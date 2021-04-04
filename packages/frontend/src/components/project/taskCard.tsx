@@ -52,17 +52,18 @@ const TaskCard = ({ task, isDragging, order }: Props) => {
 	const deleteTask = async () => {
 		await deleteTaskMutation({
 			variables: { id: task.id },
-			update: (store, { data }) => {
-				const tasks = store.readQuery<GetTasksQuery>({
-					query: GetTasksDocument,
-				});
-				store.writeQuery<GetTasksQuery>({
-					query: GetTasksDocument,
-					data: {
-						getTasks: [...tasks!.getTasks],
-					},
-				});
-			},
+			refetchQueries: [{ query: GetTasksDocument }],
+			// update: (store, { data }) => {
+			// 	const tasks = store.readQuery<GetTasksQuery>({
+			// 		query: GetTasksDocument,
+			// 	});
+			// 	store.writeQuery<GetTasksQuery>({
+			// 		query: GetTasksDocument,
+			// 		data: {
+			// 			getTasks: [...tasks!.getTasks],
+			// 		},
+			// 	});
+			// },
 		});
 		resetContent();
 	};

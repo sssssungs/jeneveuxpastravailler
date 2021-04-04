@@ -60,14 +60,15 @@ const Project = () => {
 				selectOrder: data.getTasks[oldIndex].order,
 				targetOrder: data.getTasks[newIndex].order,
 			},
-			update: (store, { data }) => {
-				store.writeQuery<GetTasksQuery>({
-					query: GetTasksDocument,
-					data: {
-						getTasks: [...data!.changeTaskOrder],
-					},
-				});
-			},
+			refetchQueries: [{ query: GetTasksDocument }],
+			// update: (store, { data }) => {
+			// 	store.writeQuery<GetTasksQuery>({
+			// 		query: GetTasksDocument,
+			// 		data: {
+			// 			getTasks: [...data!.changeTaskOrder],
+			// 		},
+			// 	});
+			// },
 		});
 	};
 
