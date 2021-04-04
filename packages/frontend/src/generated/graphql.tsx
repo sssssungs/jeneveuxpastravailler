@@ -32,7 +32,7 @@ export type Mutation = {
   createTask: TaskDto;
   updateTaskContent: TaskDto;
   deleteTask: Scalars['Boolean'];
-  changeTaskOrder: TaskDto;
+  changeTaskOrder: Array<TaskDto>;
 };
 
 
@@ -66,26 +66,24 @@ export type TaskUpdateInput = {
 };
 
 export type TaskChange = {
-  selectId: Scalars['Float'];
+  sectionId: Scalars['Float'];
   selectOrder: Scalars['Float'];
-  targetId: Scalars['Float'];
   targetOrder: Scalars['Float'];
 };
 
 export type ChangeTaskOrderMutationVariables = Exact<{
-  selectId: Scalars['Float'];
   selectOrder: Scalars['Float'];
-  targetId: Scalars['Float'];
   targetOrder: Scalars['Float'];
+  sectionId: Scalars['Float'];
 }>;
 
 
 export type ChangeTaskOrderMutation = (
   { __typename?: 'Mutation' }
-  & { changeTaskOrder: (
+  & { changeTaskOrder: Array<(
     { __typename?: 'TaskDto' }
     & Pick<TaskDto, 'id' | 'content'>
-  ) }
+  )> }
 );
 
 export type CreateTaskMutationVariables = Exact<{
@@ -139,9 +137,9 @@ export type GetTasksQuery = (
 
 
 export const ChangeTaskOrderDocument = gql`
-    mutation ChangeTaskOrder($selectId: Float!, $selectOrder: Float!, $targetId: Float!, $targetOrder: Float!) {
+    mutation ChangeTaskOrder($selectOrder: Float!, $targetOrder: Float!, $sectionId: Float!) {
   changeTaskOrder(
-    changeObject: {selectId: $selectId, selectOrder: $selectOrder, targetId: $targetId, targetOrder: $targetOrder}
+    changeObject: {selectOrder: $selectOrder, targetOrder: $targetOrder, sectionId: $sectionId}
   ) {
     id
     content
@@ -163,10 +161,9 @@ export type ChangeTaskOrderMutationFn = Apollo.MutationFunction<ChangeTaskOrderM
  * @example
  * const [changeTaskOrderMutation, { data, loading, error }] = useChangeTaskOrderMutation({
  *   variables: {
- *      selectId: // value for 'selectId'
  *      selectOrder: // value for 'selectOrder'
- *      targetId: // value for 'targetId'
  *      targetOrder: // value for 'targetOrder'
+ *      sectionId: // value for 'sectionId'
  *   },
  * });
  */

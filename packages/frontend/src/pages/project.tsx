@@ -2,7 +2,12 @@ import React from 'react';
 import CommonLayout from '../components/common/commonLayout';
 import { GET_TASKS } from '../graphql/task/query/getTasks';
 import { addApolloState, initializeApollo } from 'apollo';
-import { useCreateTaskMutation, useGetTasksQuery } from 'generated/graphql';
+import {
+	TaskDto,
+	useChangeTaskOrderMutation,
+	useCreateTaskMutation,
+	useGetTasksQuery,
+} from 'generated/graphql';
 import TaskCard from 'components/project/taskCard';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from '../components/project/taskModal';
@@ -17,6 +22,8 @@ const Project = () => {
 		variables: { content, sectionId: 0 },
 		refetchQueries: [{ query: GET_TASKS }],
 	});
+	const [changeTaskOrderMutation] = useChangeTaskOrderMutation();
+	const [isDragging, setIsDragging] = React.useState<boolean>(false);
 
 	const setModal = (value: boolean) => {
 		setModalOpen(value);
@@ -37,14 +44,19 @@ const Project = () => {
 		setContent(e.target.value);
 	};
 
-	// const dragStart = e => {
-	// 	const { newDraggableIndex, newIndex, oldDraggableIndex, oldIndex } = e;
-	// 	console.log('이전 ', oldIndex, '바뀐것 ', newIndex);
-	// };
+	const dragStart = async e => {
+		setIsDragging(true);
+		// console.log('ee', e);
+		// console.log('이전 ', from, oldIndex, '바뀐것 ', to, newIndex);
+		// await changeTaskOrderMutation({ variables: { sectionId, selectOrder: oldIndex } });
+	};
 
-	const dragEnd = e => {
-		const { newDraggableIndex, newIndex, oldDraggableIndex, oldIndex } = e;
-		console.log('이전 ', oldIndex, '바뀐것 ', newIndex);
+	const dragEnd = async e => {
+		setIsDragging(false);
+		const { from, to } = e;
+		console.log('ee', e, from.id, to.id);
+		// console.log('이전 ', from, oldIndex, '바뀐것 ', to, newIndex);
+		// await changeTaskOrderMutation({ variables: { sectionId, selectOrder: oldIndex } });
 	};
 
 	return (
@@ -69,18 +81,18 @@ const Project = () => {
 			<AddButton onClick={setModal} />
 			{data?.getTasks && (
 				<ReactSortable
-					list={data?.getTasks}
-					setList={() => {}}
+					group={'0'}
+					list={data?.getTasks as TaskDto[]}
+					setList={data => {}}
 					animation={300}
 					swapThreshold={0.75}
 					fallbackOnBody={true}
 					forceFallback={true}
-					dragClass="dragging"
-					// onStart={dragStart}
-					onSort={dragEnd}
+					onStart={dragStart}
+					onEnd={dragEnd}
 				>
-					{data?.getTasks?.map((task, index) => (
-						<TaskCard task={task} key={index} />
+					{data?.getTasks?.map((task: TaskDto, index) => (
+						<TaskCard task={task} key={index} id={String(task.order)} isDragging={isDragging} />
 					))}
 				</ReactSortable>
 			)}

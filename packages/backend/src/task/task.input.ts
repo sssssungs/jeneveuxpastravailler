@@ -19,11 +19,9 @@ export class TaskUpdateInput {
 @InputType()
 export class TaskChange {
 	@Field()
-	readonly selectId!: number;
+	readonly sectionId!: number;
 	@Field()
 	readonly selectOrder!: number;
-	@Field()
-	readonly targetId!: number;
 	@Field()
 	readonly targetOrder!: number;
 }

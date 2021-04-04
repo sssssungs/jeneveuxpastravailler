@@ -17,7 +17,7 @@ type Mutation {
   createTask(newData: TaskInput!): TaskDto!
   updateTaskContent(newData: TaskUpdateInput!): TaskDto!
   deleteTask(id: Float!): Boolean!
-  changeTaskOrder(changeObject: TaskChange!): TaskDto!
+  changeTaskOrder(changeObject: TaskChange!): [TaskDto!]!
 }
 
 input TaskInput {
@@ -31,8 +31,7 @@ input TaskUpdateInput {
 }
 
 input TaskChange {
-  selectId: Float!
+  sectionId: Float!
   selectOrder: Float!
-  targetId: Float!
   targetOrder: Float!
 }

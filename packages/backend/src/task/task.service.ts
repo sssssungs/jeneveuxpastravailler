@@ -3,7 +3,7 @@ import { Task } from './task.entity';
 import { TaskDto } from './task.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TaskInput, TaskUpdateInput } from './task.input';
+import { TaskChange, TaskInput, TaskUpdateInput } from './task.input';
 
 @Injectable()
 export class TaskService {
@@ -32,5 +32,27 @@ export class TaskService {
 	deleteTask = async (id: number) => {
 		const foundTask = await this.taskRepository.findOne(id);
 		await this.taskRepository.remove(foundTask);
+		return true;
+	};
+
+	changeTask = async (changeObject: TaskChange) => {
+		const { sectionId, selectOrder, targetOrder } = changeObject;
+		const selectTask = await this.taskRepository.findOne({ sectionId, order: selectOrder });
+		const targetTask = await this.taskRepository.findOne({ sectionId, order: targetOrder });
+		const newSelectTask = {
+			id: selectTask.id,
+			content: selectTask.content,
+			order: targetTask.order,
+			sectionId,
+		};
+		const newTargetTask = {
+			id: targetTask.id,
+			content: targetTask.content,
+			order: selectTask.order,
+			sectionId,
+		};
+		await this.taskRepository.save(newSelectTask);
+		await this.taskRepository.save(newTargetTask);
+		return [newSelectTask, newTargetTask];
 	};
 }

@@ -5,9 +5,9 @@ export class TaskDto {
 	@Field()
 	readonly id?: number;
 	@Field()
-	readonly content!: string;
+	readonly content: string;
 	@Field()
-	readonly sectionId!: number;
+	readonly sectionId: number;
 	@Field()
-	order: number;
+	readonly order: number;
 }

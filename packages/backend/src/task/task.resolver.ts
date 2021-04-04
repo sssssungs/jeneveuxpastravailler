@@ -27,8 +27,8 @@ export class TaskResolver {
 		return await this.taskService.deleteTask(id);
 	}
 
-	@Mutation(() => TaskDto)
+	@Mutation(() => [TaskDto])
 	async changeTaskOrder(@Args('changeObject') changeObject: TaskChange) {
-		// return await this.taskService.deleteTask(id);
+		return await this.taskService.changeTask(changeObject);
 	}
 }

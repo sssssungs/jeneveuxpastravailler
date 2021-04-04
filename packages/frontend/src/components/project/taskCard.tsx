@@ -4,12 +4,14 @@ import { TaskDto, useDeleteTaskMutation, useUpdateTaskContentMutation } from 'ge
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
 import { GET_TASKS } from '../../graphql/task/query/getTasks';
+import { FunctionComponent } from 'react';
 
 interface Props {
 	task: TaskDto;
+	isDragging: boolean;
 }
 
-const TaskCard = ({ task }: Props) => {
+const TaskCard: FunctionComponent<Props> = ({ task, isDragging }) => {
 	const [updateTaskMutation] = useUpdateTaskContentMutation({
 		refetchQueries: [{ query: GET_TASKS }],
 	});
@@ -25,7 +27,6 @@ const TaskCard = ({ task }: Props) => {
 
 	const resetContent = () => {
 		setModalOpen(false);
-		// for modal close animation
 		setContent(task.content);
 	};
 
@@ -45,9 +46,12 @@ const TaskCard = ({ task }: Props) => {
 
 	return (
 		<>
-			<TaskCardWrapper modalOpen={modalOpen} onClick={setModal(true)}>
-				<TaskCardContent>{task.content}</TaskCardContent>
-			</TaskCardWrapper>
+			<TaskCardWrapper modalOpen={modalOpen} isDragging={isDragging}>
+				<TaskCardContent>
+					{task.content}
+					<MoreButton onClick={setModal(true)}>MORE</MoreButton>
+				</TaskCardContent>
+			</TaskCardWrapper>{' '}
 			<Modal
 				open={modalOpen}
 				onClose={resetContent}
@@ -72,7 +76,8 @@ const TaskCard = ({ task }: Props) => {
 
 export default TaskCard;
 
-export const TaskCardWrapper = styled.div<{ modalOpen: boolean }>`
+export const TaskCardWrapper = styled.div<{ modalOpen: boolean; isDragging: boolean }>`
+	position: relative;
 	display: flex;
 	width: 200px;
 	height: 70px;
@@ -89,11 +94,27 @@ export const TaskCardWrapper = styled.div<{ modalOpen: boolean }>`
 		${props => (props.modalOpen ? props.theme.colors.light.B_300 : props.theme.colors.light.SHADOW)};
 
 	&:hover {
-		cursor: pointer;
+		cursor: move;
 		box-shadow: 2px 2px 5px ${props => props.theme.colors.light.G_200};
+		& div {
+			visibility: ${props => !props.isDragging && 'visible'};
+		}
 	}
+
 	&:last-of-type {
 		margin-bottom: 0;
+	}
+`;
+
+const MoreButton = styled.div`
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	font-size: 12px;
+	visibility: hidden;
+	&:hover {
+		cursor: pointer;
+		background-color: ${props => props.theme.colors.light.SHADOW};
 	}
 `;
 
