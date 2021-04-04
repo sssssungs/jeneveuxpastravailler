@@ -82,7 +82,7 @@ export type ChangeTaskOrderMutation = (
   { __typename?: 'Mutation' }
   & { changeTaskOrder: Array<(
     { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'id' | 'content'>
+    & Pick<TaskDto, 'id' | 'content' | 'sectionId' | 'order'>
   )> }
 );
 
@@ -143,6 +143,8 @@ export const ChangeTaskOrderDocument = gql`
   ) {
     id
     content
+    sectionId
+    order
   }
 }
     `;

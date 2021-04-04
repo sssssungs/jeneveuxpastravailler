@@ -10,10 +10,11 @@ export class TaskService {
 	constructor(@InjectRepository(Task) private readonly taskRepository: Repository<Task>) {}
 
 	createTask = async (newData: TaskInput) => {
-		const [, count] = await this.taskRepository.findAndCount();
+		const list = await this.taskRepository.find({ order: { order: 'DESC' } });
+		const max = list?.[0].order || 0;
 		const saveData: TaskDto = {
 			sectionId: newData.sectionId,
-			order: count + 1,
+			order: max + 1,
 			content: newData.content,
 		};
 		return await this.taskRepository.save(saveData);
@@ -51,8 +52,9 @@ export class TaskService {
 			order: selectTask.order,
 			sectionId,
 		};
+
 		await this.taskRepository.save(newSelectTask);
 		await this.taskRepository.save(newTargetTask);
-		return [newSelectTask, newTargetTask];
+		return await this.taskRepository.find({ order: { order: 'DESC' } });
 	};
 }

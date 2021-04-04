@@ -1,17 +1,23 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { TaskDto, useDeleteTaskMutation, useUpdateTaskContentMutation } from 'generated/graphql';
+import {
+	GetTasksDocument,
+	GetTasksQuery,
+	TaskDto,
+	useDeleteTaskMutation,
+	useUpdateTaskContentMutation,
+} from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
 import { GET_TASKS } from '../../graphql/task/query/getTasks';
-import { FunctionComponent } from 'react';
 
 interface Props {
 	task: TaskDto;
 	isDragging: boolean;
+	order: string;
 }
 
-const TaskCard: FunctionComponent<Props> = ({ task, isDragging }) => {
+const TaskCard = ({ task, isDragging, order }: Props) => {
 	const [updateTaskMutation] = useUpdateTaskContentMutation({
 		refetchQueries: [{ query: GET_TASKS }],
 	});
@@ -20,6 +26,10 @@ const TaskCard: FunctionComponent<Props> = ({ task, isDragging }) => {
 	});
 	const [modalOpen, setModalOpen] = React.useState(false);
 	const [content, setContent] = React.useState(task.content);
+
+	React.useEffect(() => {
+		setContent(task.content);
+	}, [task]);
 
 	const setModal = (value: boolean) => () => {
 		setModalOpen(value);
@@ -40,13 +50,26 @@ const TaskCard: FunctionComponent<Props> = ({ task, isDragging }) => {
 	};
 
 	const deleteTask = async () => {
-		await deleteTaskMutation({ variables: { id: task.id } });
+		await deleteTaskMutation({
+			variables: { id: task.id },
+			update: (store, { data }) => {
+				const tasks = store.readQuery<GetTasksQuery>({
+					query: GetTasksDocument,
+				});
+				store.writeQuery<GetTasksQuery>({
+					query: GetTasksDocument,
+					data: {
+						getTasks: [...tasks!.getTasks],
+					},
+				});
+			},
+		});
 		resetContent();
 	};
 
 	return (
 		<>
-			<TaskCardWrapper modalOpen={modalOpen} isDragging={isDragging}>
+			<TaskCardWrapper modalOpen={modalOpen} isDragging={isDragging} id={order}>
 				<TaskCardContent>
 					{task.content}
 					<MoreButton onClick={setModal(true)}>MORE</MoreButton>

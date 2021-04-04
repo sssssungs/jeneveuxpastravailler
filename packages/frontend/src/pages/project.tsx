@@ -3,6 +3,8 @@ import CommonLayout from '../components/common/commonLayout';
 import { GET_TASKS } from '../graphql/task/query/getTasks';
 import { addApolloState, initializeApollo } from 'apollo';
 import {
+	GetTasksDocument,
+	GetTasksQuery,
 	TaskDto,
 	useChangeTaskOrderMutation,
 	useCreateTaskMutation,
@@ -46,17 +48,27 @@ const Project = () => {
 
 	const dragStart = async e => {
 		setIsDragging(true);
-		// console.log('ee', e);
-		// console.log('이전 ', from, oldIndex, '바뀐것 ', to, newIndex);
-		// await changeTaskOrderMutation({ variables: { sectionId, selectOrder: oldIndex } });
 	};
 
 	const dragEnd = async e => {
 		setIsDragging(false);
-		const { from, to } = e;
-		console.log('ee', e, from.id, to.id);
-		// console.log('이전 ', from, oldIndex, '바뀐것 ', to, newIndex);
-		// await changeTaskOrderMutation({ variables: { sectionId, selectOrder: oldIndex } });
+		const { oldIndex, newIndex } = e;
+
+		await changeTaskOrderMutation({
+			variables: {
+				sectionId: 0,
+				selectOrder: data.getTasks[oldIndex].order,
+				targetOrder: data.getTasks[newIndex].order,
+			},
+			update: (store, { data }) => {
+				store.writeQuery<GetTasksQuery>({
+					query: GetTasksDocument,
+					data: {
+						getTasks: [...data!.changeTaskOrder],
+					},
+				});
+			},
+		});
 	};
 
 	return (
@@ -92,7 +104,7 @@ const Project = () => {
 					onEnd={dragEnd}
 				>
 					{data?.getTasks?.map((task: TaskDto, index) => (
-						<TaskCard task={task} key={index} id={String(task.order)} isDragging={isDragging} />
+						<TaskCard task={task} key={index} order={String(task.order)} isDragging={isDragging} />
 					))}
 				</ReactSortable>
 			)}
