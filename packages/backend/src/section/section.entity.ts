@@ -1,28 +1,24 @@
+import { Task } from 'src/task/task.entity';
 import {
-	BaseEntity,
 	Column,
 	CreateDateColumn,
 	Entity,
-	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
+	BaseEntity,
 } from 'typeorm';
-import { Section } from 'src/section/section.entity';
 
 @Entity()
-export class Task extends BaseEntity {
+export class Section extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@Column()
-	content: string;
+	name: string;
 
-	@ManyToOne(() => Section, section => section.task)
-	@Column()
-	section: Section;
-
-	@Column()
-	order: number;
+	@OneToMany(() => Task, task => task.section)
+	task: Task[];
 
 	@CreateDateColumn()
 	createdAt: string;

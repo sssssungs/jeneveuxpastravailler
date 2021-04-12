@@ -37,24 +37,24 @@ export class TaskService {
 	};
 
 	changeTask = async (changeObject: TaskChange) => {
-		const { sectionId, selectOrder, targetOrder } = changeObject;
-		const selectTask = await this.taskRepository.findOne({ sectionId, order: selectOrder });
-		const targetTask = await this.taskRepository.findOne({ sectionId, order: targetOrder });
-		const newSelectTask = {
-			id: selectTask.id,
-			content: selectTask.content,
-			order: targetTask.order,
-			sectionId,
-		};
-		const newTargetTask = {
-			id: targetTask.id,
-			content: targetTask.content,
-			order: selectTask.order,
-			sectionId,
-		};
-
-		await this.taskRepository.save(newSelectTask);
-		await this.taskRepository.save(newTargetTask);
-		return await this.taskRepository.find({ order: { order: 'DESC' } });
+		// const { sectionId, selectOrder, targetOrder } = changeObject;
+		// const selectTask = await this.taskRepository.findOne({ sectionId, order: selectOrder });
+		// const targetTask = await this.taskRepository.findOne({ sectionId, order: targetOrder });
+		// const newSelectTask = {
+		// 	id: selectTask.id,
+		// 	content: selectTask.content,
+		// 	order: targetTask.order,
+		// 	sectionId,
+		// };
+		// const newTargetTask = {
+		// 	id: targetTask.id,
+		// 	content: targetTask.content,
+		// 	order: selectTask.order,
+		// 	sectionId,
+		// };
+		//
+		// await this.taskRepository.save(newSelectTask);
+		// await this.taskRepository.save(newTargetTask);
+		// return await this.taskRepository.find({ order: { order: 'DESC' } });
 	};
 }
