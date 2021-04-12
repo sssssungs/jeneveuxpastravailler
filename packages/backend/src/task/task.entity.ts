@@ -17,9 +17,8 @@ export class Task extends BaseEntity {
 	@Column()
 	content: string;
 
-	@ManyToOne(() => Section, section => section.task)
-	@Column()
-	section: Section;
+	@ManyToOne(() => Section, section => section.tasks)
+	section: number;
 
 	@Column()
 	order: number;

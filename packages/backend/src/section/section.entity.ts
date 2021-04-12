@@ -18,7 +18,7 @@ export class Section extends BaseEntity {
 	name: string;
 
 	@OneToMany(() => Task, task => task.section)
-	task: Task[];
+	tasks: Task[];
 
 	@CreateDateColumn()
 	createdAt: string;
