@@ -5,7 +5,6 @@ export const GET_TASKS = gql`
 		getTasks {
 			id
 			content
-			sectionId
 			order
 		}
 	}

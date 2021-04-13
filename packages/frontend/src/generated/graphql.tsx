@@ -22,9 +22,25 @@ export type TaskDto = {
   order: Scalars['Float'];
 };
 
+export type GetTaskType = {
+  __typename?: 'GetTaskType';
+  id: Scalars['Float'];
+  content: Scalars['String'];
+  section: Scalars['Float'];
+  order: Scalars['Float'];
+};
+
+export type SectionDto = {
+  __typename?: 'SectionDto';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  order: Scalars['Float'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  getTasks: Array<TaskDto>;
+  getTasks: Array<GetTaskType>;
+  getSections: Array<SectionDto>;
 };
 
 export type Mutation = {
@@ -71,6 +87,17 @@ export type TaskChange = {
   targetOrder: Scalars['Float'];
 };
 
+export type GetSectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSectionsQuery = (
+  { __typename?: 'Query' }
+  & { getSections: Array<(
+    { __typename?: 'SectionDto' }
+    & Pick<SectionDto, 'id' | 'order'>
+  )> }
+);
+
 export type ChangeTaskOrderMutationVariables = Exact<{
   selectOrder: Scalars['Float'];
   targetOrder: Scalars['Float'];
@@ -96,7 +123,7 @@ export type CreateTaskMutation = (
   { __typename?: 'Mutation' }
   & { createTask: (
     { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'id' | 'content' | 'sectionId'>
+    & Pick<TaskDto, 'id' | 'content' | 'sectionId' | 'order'>
   ) }
 );
 
@@ -130,12 +157,47 @@ export type GetTasksQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetTasksQuery = (
   { __typename?: 'Query' }
   & { getTasks: Array<(
-    { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'id' | 'content' | 'sectionId' | 'order'>
+    { __typename?: 'GetTaskType' }
+    & Pick<GetTaskType, 'id' | 'content' | 'order'>
   )> }
 );
 
 
+export const GetSectionsDocument = gql`
+    query GetSections {
+  getSections {
+    id
+    order
+  }
+}
+    `;
+
+/**
+ * __useGetSectionsQuery__
+ *
+ * To run a query within a React component, call `useGetSectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSectionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSectionsQuery(baseOptions?: Apollo.QueryHookOptions<GetSectionsQuery, GetSectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSectionsQuery, GetSectionsQueryVariables>(GetSectionsDocument, options);
+      }
+export function useGetSectionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSectionsQuery, GetSectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSectionsQuery, GetSectionsQueryVariables>(GetSectionsDocument, options);
+        }
+export type GetSectionsQueryHookResult = ReturnType<typeof useGetSectionsQuery>;
+export type GetSectionsLazyQueryHookResult = ReturnType<typeof useGetSectionsLazyQuery>;
+export type GetSectionsQueryResult = Apollo.QueryResult<GetSectionsQuery, GetSectionsQueryVariables>;
 export const ChangeTaskOrderDocument = gql`
     mutation ChangeTaskOrder($selectOrder: Float!, $targetOrder: Float!, $sectionId: Float!) {
   changeTaskOrder(
@@ -182,6 +244,7 @@ export const CreateTaskDocument = gql`
     id
     content
     sectionId
+    order
   }
 }
     `;
@@ -283,7 +346,6 @@ export const GetTasksDocument = gql`
   getTasks {
     id
     content
-    sectionId
     order
   }
 }

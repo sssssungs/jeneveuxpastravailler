@@ -6,6 +6,7 @@ export const createTaskMutation = gql`
 			id
 			content
 			sectionId
+			order
 		}
 	}
 `;

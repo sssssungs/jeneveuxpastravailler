@@ -3,29 +3,38 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinColumn,
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
 import { Section } from 'src/section/section.entity';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class Task extends BaseEntity {
 	@PrimaryGeneratedColumn()
+	@Field()
 	id: number;
 
 	@Column()
+	@Field()
 	content: string;
 
 	@ManyToOne(() => Section, section => section.tasks)
-	section: number;
+	@Field()
+	section: Section;
 
 	@Column()
+	@Field()
 	order: number;
 
 	@CreateDateColumn()
+	@Field()
 	createdAt: string;
 
 	@UpdateDateColumn()
+	@Field()
 	updatedAt: string;
 }

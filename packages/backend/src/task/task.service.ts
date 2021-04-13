@@ -1,23 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from './task.entity';
-import { TaskDto } from './task.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskChange, TaskInput, TaskUpdateInput } from './task.input';
+import { Section } from '../section/section.entity';
+import { SaveTaskDto } from './task.dto';
 
 @Injectable()
 export class TaskService {
-	constructor(@InjectRepository(Task) private readonly taskRepository: Repository<Task>) {}
+	constructor(
+		@InjectRepository(Task) private readonly taskRepository: Repository<Task>,
+		@InjectRepository(Section)
+		private readonly sectionRepository: Repository<Section>,
+	) {}
 
 	createTask = async (newData: TaskInput) => {
+		const isFirstInsert = await this.taskRepository.find();
+		let section = newData.sectionId;
+		if (isFirstInsert.length === 0) {
+			const sectionSaveData = {
+				order: 0,
+				name: '',
+			};
+			const newSection = await this.sectionRepository.save(sectionSaveData);
+			section = newSection.id;
+		}
 		const list = await this.taskRepository.find({ order: { order: 'DESC' } });
-		const max = list?.[0].order || 0;
-		const saveData: TaskDto = {
-			sectionId: newData.sectionId,
-			order: max + 1,
-			content: newData.content,
-		};
-		return await this.taskRepository.save(saveData);
+		const max = list?.[0]?.order || 0;
+		// const saveData: SaveTaskDto = {
+		// 	section: {
+		// 		id: section,
+		// 	},
+		// 	order: max + 1,
+		// 	content: newData.content,
+		// };
+		// return await this.taskRepository.save(saveData);
 	};
 
 	getTasks = async () => {

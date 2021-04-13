@@ -1,4 +1,5 @@
 import { Task } from 'src/task/task.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
 import {
 	Column,
 	CreateDateColumn,
@@ -6,23 +7,32 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
-	BaseEntity,
 } from 'typeorm';
 
 @Entity()
-export class Section extends BaseEntity {
+@ObjectType()
+export class Section {
 	@PrimaryGeneratedColumn()
+	@Field(() => Number)
 	id: number;
 
 	@Column()
+	@Field(() => String)
 	name: string;
 
 	@OneToMany(() => Task, task => task.section)
+	@Field(() => [Task], { defaultValue: [] })
 	tasks: Task[];
 
+	@Column()
+	@Field(() => Number)
+	order: number;
+
 	@CreateDateColumn()
-	createdAt: string;
+	@Field()
+	createdAt: Date;
 
 	@UpdateDateColumn()
-	updatedAt: string;
+	@Field()
+	updatedAt: Date;
 }

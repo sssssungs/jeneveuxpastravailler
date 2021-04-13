@@ -2,6 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Section {
+  id: Float!
+  name: String!
+  tasks: [Task!]!
+  order: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Task {
+  id: Float!
+  content: String!
+  section: Section!
+  order: Float!
+  createdAt: String!
+  updatedAt: String!
+}
+
 type TaskDto {
   id: Float!
   content: String!
@@ -9,8 +32,16 @@ type TaskDto {
   order: Float!
 }
 
+type GetTaskType {
+  id: Float!
+  content: String!
+  section: Float!
+  order: Float!
+}
+
 type Query {
-  getTasks: [TaskDto!]!
+  getTasks: [GetTaskType!]!
+  getSections: [Section!]!
 }
 
 type Mutation {
