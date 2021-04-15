@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskChange, TaskInput, TaskUpdateInput } from './task.input';
 import { Section } from '../section/section.entity';
 import { SaveTaskDto } from './task.dto';
+import { SectionDto } from 'src/section/section.dto';
 
 @Injectable()
 export class TaskService {
@@ -15,26 +16,25 @@ export class TaskService {
 	) {}
 
 	createTask = async (newData: TaskInput) => {
-		const isFirstInsert = await this.taskRepository.find();
-		let section = newData.sectionId;
-		if (isFirstInsert.length === 0) {
-			const sectionSaveData = {
-				order: 0,
-				name: '',
-			};
-			const newSection = await this.sectionRepository.save(sectionSaveData);
-			section = newSection.id;
+		const sectionInfo = await this.sectionRepository.find({ where: { id: newData.sectionId } });
+		let saveSection;
+		const newSection: SectionDto = {
+			name: '',
+			order: sectionInfo.length + 1,
+		};
+		if (sectionInfo.length > 0) {
+			saveSection = sectionInfo[0];
+		} else {
+			saveSection = await this.sectionRepository.save(newSection);
 		}
 		const list = await this.taskRepository.find({ order: { order: 'DESC' } });
 		const max = list?.[0]?.order || 0;
-		// const saveData: SaveTaskDto = {
-		// 	section: {
-		// 		id: section,
-		// 	},
-		// 	order: max + 1,
-		// 	content: newData.content,
-		// };
-		// return await this.taskRepository.save(saveData);
+		const saveData: SaveTaskDto = {
+			section: saveSection,
+			order: max + 1,
+			content: newData.content,
+		};
+		return await this.taskRepository.save(saveData);
 	};
 
 	getTasks = async () => {

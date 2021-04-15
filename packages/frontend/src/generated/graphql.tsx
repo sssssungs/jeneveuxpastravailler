@@ -12,6 +12,29 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
+};
+
+export type Section = {
+  __typename?: 'Section';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  tasks: Array<Task>;
+  order: Scalars['Float'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+
+export type Task = {
+  __typename?: 'Task';
+  id: Scalars['Float'];
+  content: Scalars['String'];
+  section: Section;
+  order: Scalars['Float'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type TaskDto = {
@@ -30,17 +53,10 @@ export type GetTaskType = {
   order: Scalars['Float'];
 };
 
-export type SectionDto = {
-  __typename?: 'SectionDto';
-  id: Scalars['Float'];
-  name: Scalars['String'];
-  order: Scalars['Float'];
-};
-
 export type Query = {
   __typename?: 'Query';
   getTasks: Array<GetTaskType>;
-  getSections: Array<SectionDto>;
+  getSections: Array<Section>;
 };
 
 export type Mutation = {
@@ -93,8 +109,12 @@ export type GetSectionsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetSectionsQuery = (
   { __typename?: 'Query' }
   & { getSections: Array<(
-    { __typename?: 'SectionDto' }
-    & Pick<SectionDto, 'id' | 'order'>
+    { __typename?: 'Section' }
+    & Pick<Section, 'id' | 'order'>
+    & { tasks: Array<(
+      { __typename?: 'Task' }
+      & Pick<Task, 'id' | 'content'>
+    )> }
   )> }
 );
 
@@ -168,6 +188,10 @@ export const GetSectionsDocument = gql`
   getSections {
     id
     order
+    tasks {
+      id
+      content
+    }
   }
 }
     `;

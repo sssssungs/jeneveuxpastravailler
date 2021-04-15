@@ -5,6 +5,10 @@ export const GET_SECTIONS = gql`
 		getSections {
 			id
 			order
+			tasks {
+				id
+				content
+			}
 		}
 	}
 `;
