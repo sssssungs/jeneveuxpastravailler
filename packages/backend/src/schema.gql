@@ -28,7 +28,6 @@ type Task {
 type TaskDto {
   id: Float!
   content: String!
-  sectionId: Float!
   order: Float!
 }
 

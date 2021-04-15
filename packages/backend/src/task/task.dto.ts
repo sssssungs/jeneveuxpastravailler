@@ -8,8 +8,6 @@ export class TaskDto {
 	@Field()
 	readonly content: string;
 	@Field()
-	readonly sectionId: number;
-	@Field()
 	readonly order: number;
 }
 

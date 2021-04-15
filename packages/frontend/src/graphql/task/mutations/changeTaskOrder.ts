@@ -7,7 +7,6 @@ export const changeTaskOrderMutation = gql`
 		) {
 			id
 			content
-			sectionId
 			order
 		}
 	}

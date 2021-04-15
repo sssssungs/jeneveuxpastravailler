@@ -5,7 +5,6 @@ export const createTaskMutation = gql`
 		createTask(newData: { content: $content, sectionId: $sectionId }) {
 			id
 			content
-			sectionId
 			order
 		}
 	}

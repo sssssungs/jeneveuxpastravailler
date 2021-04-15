@@ -41,7 +41,6 @@ export type TaskDto = {
   __typename?: 'TaskDto';
   id: Scalars['Float'];
   content: Scalars['String'];
-  sectionId: Scalars['Float'];
   order: Scalars['Float'];
 };
 
@@ -113,7 +112,7 @@ export type GetSectionsQuery = (
     & Pick<Section, 'id' | 'order'>
     & { tasks: Array<(
       { __typename?: 'Task' }
-      & Pick<Task, 'id' | 'content'>
+      & Pick<Task, 'id' | 'content' | 'order'>
     )> }
   )> }
 );
@@ -129,7 +128,7 @@ export type ChangeTaskOrderMutation = (
   { __typename?: 'Mutation' }
   & { changeTaskOrder: Array<(
     { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'id' | 'content' | 'sectionId' | 'order'>
+    & Pick<TaskDto, 'id' | 'content' | 'order'>
   )> }
 );
 
@@ -143,7 +142,7 @@ export type CreateTaskMutation = (
   { __typename?: 'Mutation' }
   & { createTask: (
     { __typename?: 'TaskDto' }
-    & Pick<TaskDto, 'id' | 'content' | 'sectionId' | 'order'>
+    & Pick<TaskDto, 'id' | 'content' | 'order'>
   ) }
 );
 
@@ -191,6 +190,7 @@ export const GetSectionsDocument = gql`
     tasks {
       id
       content
+      order
     }
   }
 }
@@ -229,7 +229,6 @@ export const ChangeTaskOrderDocument = gql`
   ) {
     id
     content
-    sectionId
     order
   }
 }
@@ -267,7 +266,6 @@ export const CreateTaskDocument = gql`
   createTask(newData: {content: $content, sectionId: $sectionId}) {
     id
     content
-    sectionId
     order
   }
 }

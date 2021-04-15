@@ -2,6 +2,7 @@ import React from 'react';
 import CommonLayout from '../components/common/commonLayout';
 import { addApolloState, initializeApollo } from 'apollo';
 import {
+	TaskDto,
 	useChangeTaskOrderMutation,
 	useCreateTaskMutation,
 	useGetSectionsQuery,
@@ -9,16 +10,19 @@ import {
 import { Modal } from 'react-responsive-modal';
 import TaskModal from '../components/project/taskModal';
 import AddButton from '../components/project/addButton';
-import { useApolloClient } from '@apollo/react-hooks';
 import TaskSection from '../components/project/taskSection';
 import { GET_SECTIONS } from '../graphql/section/query/getSections';
+import { ReactSortable } from 'react-sortablejs';
+import TaskCard from 'components/project/taskCard';
+import styled from '@emotion/styled';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	const [content, setContent] = React.useState<string>('');
+	const [sectionId, setSectionId] = React.useState<number>(-1);
+
 	const [createTaskMutation] = useCreateTaskMutation({
-		variables: { content, sectionId: 0 },
 		refetchQueries: [{ query: GET_SECTIONS }],
 	});
 	// const [changeTaskOrderMutation, { loading, error }] = useChangeTaskOrderMutation({
@@ -28,7 +32,8 @@ const Project = () => {
 	// });
 	// const [isDragging, setIsDragging] = React.useState<boolean>(false);
 
-	const setModal = (value: boolean) => {
+	const setModal = (value: boolean, sectionId?: number) => {
+		setSectionId(sectionId);
 		setModalOpen(value);
 	};
 
@@ -36,10 +41,11 @@ const Project = () => {
 		setModalOpen(false);
 		// for modal close animation
 		setContent('');
+		setSectionId(-1);
 	};
 
 	const addNewTask = async () => {
-		await createTaskMutation();
+		await createTaskMutation({ variables: { content, sectionId } });
 		resetContent();
 	};
 
@@ -47,10 +53,10 @@ const Project = () => {
 		setContent(e.target.value);
 	};
 
-	const dragStart = async e => {
-		setIsDragging(true);
-	};
-
+	// const dragStart = async e => {
+	// 	setIsDragging(true);
+	// };
+	//
 	// const dragEnd = async e => {
 	// 	setIsDragging(false);
 	// 	const { oldIndex, newIndex } = e;
@@ -93,32 +99,37 @@ const Project = () => {
 				/>
 			</Modal>
 			<TaskSection>
-				<AddButton onClick={setModal} />
-				{data?.getSections.map(v => (
-					<div>{v.tasks.map(vv => vv.content)}</div>
-				))}
-				{/*{data?.getSections && (*/}
-				{/*	<ReactSortable*/}
-				{/*		group={'0'}*/}
-				{/*		list={data?.getSections as TaskDto[]}*/}
-				{/*		setList={data => {}}*/}
-				{/*		animation={300}*/}
-				{/*		swapThreshold={0.75}*/}
-				{/*		fallbackOnBody={true}*/}
-				{/*		forceFallback={true}*/}
-				{/*		onStart={dragStart}*/}
-				{/*		onEnd={dragEnd}*/}
-				{/*	>*/}
-				{/*		{data?.getTasks?.map((task: TaskDto, index) => (*/}
-				{/*			<TaskCard*/}
-				{/*				task={task}*/}
-				{/*				key={index}*/}
-				{/*				order={String(task.order)}*/}
-				{/*				isDragging={isDragging}*/}
-				{/*			/>*/}
-				{/*		))}*/}
-				{/*	</ReactSortable>*/}
-				{/*)}*/}
+				<SectionWrapper>
+					{data?.getSections.map(section => (
+						<TaskSection key={section.id}>
+							<AddButton onClick={() => setModal(true, section.id)} />
+							<div>
+								{section?.tasks && (
+									<ReactSortable
+										group={'0'}
+										list={section?.tasks}
+										setList={data => {}}
+										animation={300}
+										swapThreshold={0.75}
+										fallbackOnBody={true}
+										forceFallback={true}
+										// onStart={dragStart}
+										// onEnd={dragEnd}
+									>
+										{section?.tasks.map((task, index) => (
+											<TaskCard
+												task={task}
+												key={index}
+												order={String(task.order)}
+												// isDragging={isDragging}
+											/>
+										))}
+									</ReactSortable>
+								)}
+							</div>
+						</TaskSection>
+					))}
+				</SectionWrapper>
 			</TaskSection>
 		</CommonLayout>
 	);
@@ -133,3 +144,12 @@ export const getServerSideProps = async () => {
 		props: {},
 	});
 };
+
+const SectionWrapper = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+const Section = styled.div`
+	margin-right: ${props => props.theme.spacing.xl};
+`;

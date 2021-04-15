@@ -8,6 +8,7 @@ export const GET_SECTIONS = gql`
 			tasks {
 				id
 				content
+				order
 			}
 		}
 	}

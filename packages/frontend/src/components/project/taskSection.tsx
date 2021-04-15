@@ -31,15 +31,9 @@ const AddInput = styled.div`
 const SectionLayout = styled.div`
 	display: flex;
 	width: fit-content;
-	border: 2px red dashed;
-	&:hover {
-		${AddInput} {
-			display: block;
-		}
-	}
+	margin-right: ${props => props.theme.spacing.xl};
 `;
 
 const TaskSectionWrapper = styled.div`
 	width: fit-content;
-	background-color: yellow;
 `;
