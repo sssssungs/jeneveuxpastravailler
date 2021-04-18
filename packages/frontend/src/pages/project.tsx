@@ -15,6 +15,7 @@ import { GET_SECTIONS } from '../graphql/section/query/getSections';
 import { ReactSortable } from 'react-sortablejs';
 import TaskCard from 'components/project/taskCard';
 import styled from '@emotion/styled';
+import AddSectionButton from '../components/project/addSectionButton';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
@@ -81,6 +82,7 @@ const Project = () => {
 
 	return (
 		<CommonLayout current={'project'}>
+			<AddSectionButton />
 			<Modal
 				open={modalOpen}
 				onClose={resetContent}
@@ -149,8 +151,4 @@ export const getServerSideProps = async () => {
 const SectionWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
-`;
-
-const Section = styled.div`
-	margin-right: ${props => props.theme.spacing.xl};
 `;
