@@ -94,6 +94,7 @@ export type TaskInput = {
 export type TaskUpdateInput = {
   id: Scalars['Float'];
   content: Scalars['String'];
+  sectionId: Scalars['Float'];
 };
 
 export type TaskChange = {
@@ -159,6 +160,7 @@ export type DeleteTaskMutation = (
 export type UpdateTaskContentMutationVariables = Exact<{
   id: Scalars['Float'];
   content: Scalars['String'];
+  sectionId: Scalars['Float'];
 }>;
 
 
@@ -329,8 +331,8 @@ export type DeleteTaskMutationHookResult = ReturnType<typeof useDeleteTaskMutati
 export type DeleteTaskMutationResult = Apollo.MutationResult<DeleteTaskMutation>;
 export type DeleteTaskMutationOptions = Apollo.BaseMutationOptions<DeleteTaskMutation, DeleteTaskMutationVariables>;
 export const UpdateTaskContentDocument = gql`
-    mutation UpdateTaskContent($id: Float!, $content: String!) {
-  updateTaskContent(newData: {id: $id, content: $content}) {
+    mutation UpdateTaskContent($id: Float!, $content: String!, $sectionId: Float!) {
+  updateTaskContent(newData: {id: $id, content: $content, sectionId: $sectionId}) {
     id
     content
   }
@@ -353,6 +355,7 @@ export type UpdateTaskContentMutationFn = Apollo.MutationFunction<UpdateTaskCont
  *   variables: {
  *      id: // value for 'id'
  *      content: // value for 'content'
+ *      sectionId: // value for 'sectionId'
  *   },
  * });
  */

@@ -58,6 +58,7 @@ input TaskInput {
 input TaskUpdateInput {
   id: Float!
   content: String!
+  sectionId: Float!
 }
 
 input TaskChange {

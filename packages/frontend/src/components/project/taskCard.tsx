@@ -1,28 +1,29 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import {
+	GetSectionsDocument,
 	GetTasksDocument,
-	GetTasksQuery,
-	TaskDto,
+	Task,
 	useDeleteTaskMutation,
 	useUpdateTaskContentMutation,
 } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
-import { GET_TASKS } from '../../graphql/task/query/getTasks';
 
 interface Props {
-	task: TaskDto;
-	isDragging: boolean;
+	task: Task;
+	isDragging?: boolean;
 	order: string;
+	sectionId: number;
 }
 
-const TaskCard = ({ task, isDragging, order }: Props) => {
+const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
+	console.log('task', task);
 	const [updateTaskMutation] = useUpdateTaskContentMutation({
-		refetchQueries: [{ query: GET_TASKS }],
+		refetchQueries: [{ query: GetSectionsDocument }],
 	});
 	const [deleteTaskMutation] = useDeleteTaskMutation({
-		refetchQueries: [{ query: GET_TASKS }],
+		refetchQueries: [{ query: GetSectionsDocument }],
 	});
 	const [modalOpen, setModalOpen] = React.useState(false);
 	const [content, setContent] = React.useState(task.content);
@@ -45,7 +46,7 @@ const TaskCard = ({ task, isDragging, order }: Props) => {
 	};
 
 	const updateTaskContent = async () => {
-		await updateTaskMutation({ variables: { id: task.id, content } });
+		await updateTaskMutation({ variables: { id: task.id, content, sectionId } });
 		resetContent();
 	};
 

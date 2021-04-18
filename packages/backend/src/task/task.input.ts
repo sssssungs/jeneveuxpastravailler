@@ -14,6 +14,8 @@ export class TaskUpdateInput {
 	readonly id!: number;
 	@Field()
 	readonly content: string;
+	@Field()
+	readonly sectionId: number;
 }
 
 @InputType()

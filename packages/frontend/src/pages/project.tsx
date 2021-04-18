@@ -2,8 +2,8 @@ import React from 'react';
 import CommonLayout from '../components/common/commonLayout';
 import { addApolloState, initializeApollo } from 'apollo';
 import {
-	TaskDto,
-	useChangeTaskOrderMutation,
+	GetTasksDocument,
+	Task,
 	useCreateTaskMutation,
 	useGetSectionsQuery,
 } from 'generated/graphql';
@@ -23,7 +23,7 @@ const Project = () => {
 	const [sectionId, setSectionId] = React.useState<number>(-1);
 
 	const [createTaskMutation] = useCreateTaskMutation({
-		refetchQueries: [{ query: GET_SECTIONS }],
+		refetchQueries: [{ query: GetTasksDocument }],
 	});
 	// const [changeTaskOrderMutation, { loading, error }] = useChangeTaskOrderMutation({
 	// 	onCompleted: a => {
@@ -116,11 +116,12 @@ const Project = () => {
 										// onStart={dragStart}
 										// onEnd={dragEnd}
 									>
-										{section?.tasks.map((task, index) => (
+										{section?.tasks.map((task: Task, index) => (
 											<TaskCard
 												task={task}
 												key={index}
 												order={String(task.order)}
+												sectionId={section.id}
 												// isDragging={isDragging}
 											/>
 										))}

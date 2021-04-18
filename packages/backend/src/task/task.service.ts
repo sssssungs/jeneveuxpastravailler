@@ -42,7 +42,10 @@ export class TaskService {
 	};
 
 	updateTaskContent = async (newData: TaskUpdateInput) => {
-		const newTask = await this.taskRepository.findOne(newData.id);
+		const section = await this.sectionRepository.findOne(newData.sectionId);
+		const newTask = await this.taskRepository.findOne({
+			where: { id: newData.id, section },
+		});
 		newTask.content = newData.content;
 		return await this.taskRepository.save(newTask);
 	};
