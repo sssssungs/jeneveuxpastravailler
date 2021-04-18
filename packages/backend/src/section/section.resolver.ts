@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SectionService } from '../section/section.service';
 import { Section } from './section.entity';
 
@@ -8,5 +8,10 @@ export class SectionResolver {
 	@Query(() => [Section])
 	async getSections() {
 		return await this.sectionService.getSections();
+	}
+
+	@Mutation(() => Section)
+	async createSection(@Args('order') order: number) {
+		return await this.sectionService.createSection(order);
 	}
 }

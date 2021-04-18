@@ -1,8 +1,26 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
+import { Modal } from 'react-responsive-modal';
+import { GetSectionsDocument, useCreateSectionMutation } from '../../generated/graphql';
 
 const AddSectionButton = () => {
-	return <AddSection>Add Section</AddSection>;
+	const [openAddSectionModal, setOpenAddSectionModal] = React.useState<boolean>(false);
+	const [createSectionMutation] = useCreateSectionMutation({
+		refetchQueries: [{ query: GetSectionsDocument }],
+	});
+	const toggleModal = async () => {
+		await createSectionMutation({ variables: { order: 1 } });
+		// setOpenAddSectionModal(!openAddSectionModal);
+	};
+
+	return (
+		<>
+			<Modal open={openAddSectionModal} onClose={toggleModal}>
+				<div>asdf</div>
+			</Modal>
+			<AddSection onClick={toggleModal}>Add Section</AddSection>
+		</>
+	);
 };
 
 export default AddSectionButton;
