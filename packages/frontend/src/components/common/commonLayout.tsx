@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import LeftMenu from './leftMenu';
 import doodles from 'public/static/images/open-doodles-laying.png';
+import AddSectionButton from 'components/project/addSectionButton';
 
 interface Props {
 	current: string;
@@ -16,6 +17,7 @@ const CommonLayout = ({ current, children }: Props) => {
 					<LeftMenu current={current} />
 				</LeftMenuSection>
 				<RightContentsSection>{children}</RightContentsSection>
+				<AddSectionButton />
 			</SiteLayout>
 		</>
 	);

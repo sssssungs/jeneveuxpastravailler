@@ -10,7 +10,6 @@ const TaskSection = ({ children }: Props) => {
 	return (
 		<SectionLayout>
 			<TaskSectionWrapper>{children}</TaskSectionWrapper>
-			<AddInput />
 		</SectionLayout>
 	);
 };
