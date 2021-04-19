@@ -46,7 +46,7 @@ type Query {
 type Mutation {
   createTask(newData: TaskInput!): TaskDto!
   updateTaskContent(newData: TaskUpdateInput!): TaskDto!
-  deleteTask(id: Float!): Boolean!
+  deleteTask(idInfo: IdInfoInput!): Boolean!
   changeTaskOrder(changeObject: TaskChange!): [TaskDto!]!
   createSection(order: Float!): Section!
 }
@@ -60,6 +60,11 @@ input TaskUpdateInput {
   id: Float!
   content: String!
   sectionId: Float!
+}
+
+input IdInfoInput {
+  sectionId: Float!
+  taskId: Float!
 }
 
 input TaskChange {

@@ -27,3 +27,11 @@ export class TaskChange {
 	@Field()
 	readonly targetOrder!: number;
 }
+
+@InputType()
+export class IdInfoInput {
+	@Field()
+	readonly sectionId!: number;
+	@Field()
+	readonly taskId!: number;
+}

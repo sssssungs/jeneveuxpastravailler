@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Task } from './task.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TaskChange, TaskInput, TaskUpdateInput } from './task.input';
+import { IdInfoInput, TaskChange, TaskInput, TaskUpdateInput } from './task.input';
 import { Section } from '../section/section.entity';
 import { SaveTaskDto } from './task.dto';
 import { SectionDto } from 'src/section/section.dto';
@@ -50,8 +50,13 @@ export class TaskService {
 		return await this.taskRepository.save(newTask);
 	};
 
-	deleteTask = async (id: number) => {
-		const foundTask = await this.taskRepository.findOne(id);
+	deleteTask = async (idInfo: IdInfoInput) => {
+		const section = await this.sectionRepository.findOne({ id: idInfo.sectionId });
+		console.log('section', section, idInfo);
+		const foundTask = await this.taskRepository.findOne({
+			where: { id: idInfo.taskId, section },
+		});
+		console.log('foundTask', foundTask);
 		await this.taskRepository.remove(foundTask);
 		return true;
 	};

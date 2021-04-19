@@ -2,6 +2,7 @@ import React from 'react';
 import CommonLayout from '../components/common/commonLayout';
 import { addApolloState, initializeApollo } from 'apollo';
 import {
+	GetSectionsDocument,
 	GetTasksDocument,
 	Task,
 	useCreateTaskMutation,
@@ -24,7 +25,7 @@ const Project = () => {
 	const [sectionId, setSectionId] = React.useState<number>(-1);
 
 	const [createTaskMutation] = useCreateTaskMutation({
-		refetchQueries: [{ query: GetTasksDocument }],
+		refetchQueries: [{ query: GetSectionsDocument }],
 	});
 	// const [changeTaskOrderMutation, { loading, error }] = useChangeTaskOrderMutation({
 	// 	onCompleted: a => {

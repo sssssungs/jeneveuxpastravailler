@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 export const deleteTaskMutation = gql`
-	mutation DeleteTask($id: Float!) {
-		deleteTask(id: $id)
+	mutation DeleteTask($taskId: Float!, $sectionId: Float!) {
+		deleteTask(idInfo: { sectionId: $sectionId, taskId: $taskId })
 	}
 `;

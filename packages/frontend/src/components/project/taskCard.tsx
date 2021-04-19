@@ -18,7 +18,6 @@ interface Props {
 }
 
 const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
-	console.log('task', task);
 	const [updateTaskMutation] = useUpdateTaskContentMutation({
 		refetchQueries: [{ query: GetSectionsDocument }],
 	});
@@ -52,8 +51,8 @@ const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
 
 	const deleteTask = async () => {
 		await deleteTaskMutation({
-			variables: { id: task.id },
-			refetchQueries: [{ query: GetTasksDocument }],
+			variables: { taskId: task.id, sectionId },
+			refetchQueries: [{ query: GetSectionsDocument }],
 			// update: (store, { data }) => {
 			// 	const tasks = store.readQuery<GetTasksQuery>({
 			// 		query: GetTasksDocument,

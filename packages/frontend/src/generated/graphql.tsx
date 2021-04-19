@@ -79,7 +79,7 @@ export type MutationUpdateTaskContentArgs = {
 
 
 export type MutationDeleteTaskArgs = {
-  id: Scalars['Float'];
+  idInfo: IdInfoInput;
 };
 
 
@@ -101,6 +101,11 @@ export type TaskUpdateInput = {
   id: Scalars['Float'];
   content: Scalars['String'];
   sectionId: Scalars['Float'];
+};
+
+export type IdInfoInput = {
+  sectionId: Scalars['Float'];
+  taskId: Scalars['Float'];
 };
 
 export type TaskChange = {
@@ -167,7 +172,8 @@ export type CreateTaskMutation = (
 );
 
 export type DeleteTaskMutationVariables = Exact<{
-  id: Scalars['Float'];
+  taskId: Scalars['Float'];
+  sectionId: Scalars['Float'];
 }>;
 
 
@@ -354,8 +360,8 @@ export type CreateTaskMutationHookResult = ReturnType<typeof useCreateTaskMutati
 export type CreateTaskMutationResult = Apollo.MutationResult<CreateTaskMutation>;
 export type CreateTaskMutationOptions = Apollo.BaseMutationOptions<CreateTaskMutation, CreateTaskMutationVariables>;
 export const DeleteTaskDocument = gql`
-    mutation DeleteTask($id: Float!) {
-  deleteTask(id: $id)
+    mutation DeleteTask($taskId: Float!, $sectionId: Float!) {
+  deleteTask(idInfo: {sectionId: $sectionId, taskId: $taskId})
 }
     `;
 export type DeleteTaskMutationFn = Apollo.MutationFunction<DeleteTaskMutation, DeleteTaskMutationVariables>;
@@ -373,7 +379,8 @@ export type DeleteTaskMutationFn = Apollo.MutationFunction<DeleteTaskMutation, D
  * @example
  * const [deleteTaskMutation, { data, loading, error }] = useDeleteTaskMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      taskId: // value for 'taskId'
+ *      sectionId: // value for 'sectionId'
  *   },
  * });
  */
