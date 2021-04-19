@@ -3,7 +3,6 @@ import CommonLayout from '../components/common/commonLayout';
 import { addApolloState, initializeApollo } from 'apollo';
 import {
 	GetSectionsDocument,
-	GetTasksDocument,
 	Task,
 	useCreateTaskMutation,
 	useGetSectionsQuery,
@@ -23,10 +22,13 @@ const Project = () => {
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	const [content, setContent] = React.useState<string>('');
 	const [sectionId, setSectionId] = React.useState<number>(-1);
+	const [isDragging, setIsDragging] = React.useState<boolean>(false);
 
 	const [createTaskMutation] = useCreateTaskMutation({
 		refetchQueries: [{ query: GetSectionsDocument }],
 	});
+
+	const [targetSectionId, setTargetSectionId] = React.useState<number>(-1);
 	// const [changeTaskOrderMutation, { loading, error }] = useChangeTaskOrderMutation({
 	// 	onCompleted: a => {
 	// 		console.log('변경완료', a);
@@ -41,7 +43,6 @@ const Project = () => {
 
 	const resetContent = () => {
 		setModalOpen(false);
-		// for modal close animation
 		setContent('');
 		setSectionId(-1);
 	};
@@ -55,31 +56,39 @@ const Project = () => {
 		setContent(e.target.value);
 	};
 
-	// const dragStart = async e => {
-	// 	setIsDragging(true);
-	// };
+	const dragStart = async e => {
+		setIsDragging(true);
+		console.log('starts');
+		// console.log('start, e', e);
+	};
 	//
-	// const dragEnd = async e => {
-	// 	setIsDragging(false);
-	// 	const { oldIndex, newIndex } = e;
-	// 	const { getTasks } = _cloneDeep(ac.readQuery({ query: GetTasksDocument }));
-	// 	[getTasks[oldIndex], getTasks[newIndex]] = [getTasks[newIndex], getTasks[oldIndex]];
-	// 	await changeTaskOrderMutation({
-	// 		variables: {
-	// 			sectionId: 0,
-	// 			selectOrder: data.getTasks[oldIndex].order,
-	// 			targetOrder: data.getTasks[newIndex].order,
-	// 		},
-	// 		update: (cache, { data }) => {
-	// 			cache.writeQuery<GetTasksQuery>({
-	// 				query: GetTasksDocument,
-	// 				data: {
-	// 					getTasks: data!.changeTaskOrder,
-	// 				},
-	// 			});
-	// 		},
-	// 	});
-	// };
+	const dragEnd = async (e, a) => {
+		setIsDragging(false);
+		console.log('setTargetSectionId', targetSectionId);
+		console.log('dragend');
+		// console.log('end, e', e);
+		const { oldIndex, newIndex } = e;
+		// const { getTasks } = _cloneDeep(ac.readQuery({ query: GetTasksDocument }));
+		// [getTasks[oldIndex], getTasks[newIndex]] = [getTasks[newIndex], getTasks[oldIndex]];
+		// await changeTaskOrderMutation({
+		// 	variables: {
+		// 		sectionId: 0,
+		// 		selectOrder: data.getTasks[oldIndex].order,
+		// 		targetOrder: data.getTasks[newIndex].order,
+		// 	},
+		// 	update: (cache, { data }) => {
+		// 		cache.writeQuery<GetTasksQuery>({
+		// 			query: GetTasksDocument,
+		// 			data: {
+		// 				getTasks: data!.changeTaskOrder,
+		// 			},
+		// 		});
+		// 	},
+		// });
+	};
+	const onMouseUp = targetSectionId => e => {
+		setTargetSectionId(Number(targetSectionId));
+	};
 
 	return (
 		<CommonLayout current={'project'}>
@@ -106,31 +115,32 @@ const Project = () => {
 					{data?.getSections.map(section => (
 						<TaskSection key={section.id}>
 							<AddButton onClick={() => setModal(true, section.id)} />
-							<div>
+							<SectionList onMouseUp={onMouseUp(section.id)}>
 								{section?.tasks && (
 									<ReactSortable
-										group={'0'}
+										group={'myGroup'}
 										list={section?.tasks}
 										setList={data => {}}
 										animation={300}
-										swapThreshold={0.75}
+										swapThreshold={0.7}
 										fallbackOnBody={true}
 										forceFallback={true}
-										// onStart={dragStart}
-										// onEnd={dragEnd}
+										onStart={dragStart}
+										onEnd={dragEnd}
+										onSort={onMouseUp}
 									>
-										{section?.tasks.map((task: Task, index) => (
+										{section?.tasks.map((task: Task, index: number) => (
 											<TaskCard
 												task={task}
 												key={index}
 												order={String(task.order)}
 												sectionId={section.id}
-												// isDragging={isDragging}
+												isDragging={isDragging}
 											/>
 										))}
 									</ReactSortable>
 								)}
-							</div>
+							</SectionList>
 						</TaskSection>
 					))}
 				</SectionWrapper>
@@ -152,4 +162,9 @@ export const getServerSideProps = async () => {
 const SectionWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
+`;
+
+const SectionList = styled.div`
+	display: block;
+	border: 2px red solid;
 `;

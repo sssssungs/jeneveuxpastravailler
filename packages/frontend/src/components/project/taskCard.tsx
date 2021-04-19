@@ -70,7 +70,11 @@ const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
 
 	return (
 		<>
-			<TaskCardWrapper modalOpen={modalOpen} isDragging={isDragging} id={order}>
+			<TaskCardWrapper
+				modalOpen={modalOpen}
+				isDragging={isDragging}
+				id={`${sectionId}_${task.id}_${order}`}
+			>
 				<TaskCardContent>
 					{task.content}
 					<MoreButton onClick={setModal(true)}>MORE</MoreButton>
