@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import * as React from 'react';
+import { AddButtonWrapper } from './addButton';
 
 interface Props {
 	children?: React.ReactNode;
+	currentSectionId: number;
+	mySectionId: number;
 }
 
-const TaskSection = ({ children }: Props) => {
+const TaskSection = ({ children, currentSectionId, mySectionId }: Props) => {
 	return (
-		<SectionLayout>
+		<SectionLayout currentSectionId={currentSectionId} mySectionId={mySectionId}>
 			<TaskSectionWrapper>{children}</TaskSectionWrapper>
 		</SectionLayout>
 	);
@@ -15,10 +19,22 @@ const TaskSection = ({ children }: Props) => {
 
 export default TaskSection;
 
-const SectionLayout = styled.div`
+const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`
 	display: flex;
 	width: fit-content;
 	margin-right: ${props => props.theme.spacing.xl};
+	${props =>
+		props.currentSectionId === props.mySectionId &&
+		css`
+			${AddButtonWrapper} {
+				display: block;
+			}
+		`}
+	&:hover {
+		${AddButtonWrapper} {
+			display: block;
+		}
+	}
 `;
 
 const TaskSectionWrapper = styled.div`

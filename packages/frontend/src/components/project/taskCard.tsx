@@ -9,6 +9,7 @@ import {
 } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
+import { AddButtonWrapper } from './addButton';
 
 interface Props {
 	task: Task;

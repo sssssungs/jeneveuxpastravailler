@@ -14,7 +14,8 @@ const AddButton = ({ onClick }: Props) => {
 
 export default AddButton;
 
-const AddButtonWrapper = styled.button`
+export const AddButtonWrapper = styled.button`
+	display: none;
 	justify-content: center;
 	align-items: center;
 	width: 200px;
