@@ -22,19 +22,8 @@ export default TaskSection;
 const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`
 	display: flex;
 	width: fit-content;
+	height: fit-content;
 	margin-right: ${props => props.theme.spacing.xl};
-	${props =>
-		props.currentSectionId === props.mySectionId &&
-		css`
-			${AddButtonWrapper} {
-				display: block;
-			}
-		`}
-	&:hover {
-		${AddButtonWrapper} {
-			display: block;
-		}
-	}
 `;
 
 const TaskSectionWrapper = styled.div`

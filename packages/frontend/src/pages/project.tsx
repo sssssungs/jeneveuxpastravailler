@@ -160,6 +160,9 @@ export const getServerSideProps = async () => {
 const SectionWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
+	max-width: 1400px;
+	min-height: 97vh;
+	overflow-x: auto;
 `;
 
 const SectionList = styled.div`
