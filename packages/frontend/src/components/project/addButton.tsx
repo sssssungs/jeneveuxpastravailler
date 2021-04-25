@@ -3,18 +3,24 @@ import * as React from 'react';
 
 interface Props {
 	onClick: (value: boolean) => void;
+	taskLength: number;
 }
 
-const AddButton = ({ onClick }: Props) => {
+const AddButton = ({ onClick, taskLength }: Props) => {
 	const clickAddButton = () => {
 		onClick(true);
 	};
-	return <AddButtonWrapper onClick={clickAddButton}>+</AddButtonWrapper>;
+	return (
+		<AddButtonWrapper onClick={clickAddButton} taskLength={taskLength}>
+			+
+		</AddButtonWrapper>
+	);
 };
 
 export default AddButton;
 
-export const AddButtonWrapper = styled.button`
+export const AddButtonWrapper = styled.button<{ taskLength: number }>`
+	display: ${props => (props.taskLength !== 0 ? 'none' : 'block')};
 	justify-content: center;
 	align-items: center;
 	width: 200px;

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import * as React from 'react';
 import { AddButtonWrapper } from './addButton';
 
@@ -24,6 +23,11 @@ const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number
 	width: fit-content;
 	height: fit-content;
 	margin-right: ${props => props.theme.spacing.xl};
+	&:hover {
+		${AddButtonWrapper} {
+			display: block;
+		}
+	}
 `;
 
 const TaskSectionWrapper = styled.div`

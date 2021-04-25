@@ -48,7 +48,7 @@ type Mutation {
   updateTaskContent(newData: TaskUpdateInput!): TaskDto!
   deleteTask(idInfo: IdInfoInput!): Boolean!
   changeTaskOrder(changeObject: TaskChange!): [TaskDto!]!
-  createSection(order: Float!): Section!
+  createSection(newData: CreateSectionInput!): Section!
 }
 
 input TaskInput {
@@ -71,4 +71,9 @@ input TaskChange {
   sectionId: Float!
   selectOrder: Float!
   targetOrder: Float!
+}
+
+input CreateSectionInput {
+  name: String!
+  order: Float!
 }

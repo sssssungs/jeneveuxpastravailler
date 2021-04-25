@@ -2,23 +2,52 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { Modal } from 'react-responsive-modal';
 import { GetSectionsDocument, useCreateSectionMutation } from '../../generated/graphql';
+import TaskModal from './taskModal';
 
 const AddSectionButton = () => {
 	const [openAddSectionModal, setOpenAddSectionModal] = React.useState<boolean>(false);
+	const [sectionTitle, setSectionTitle] = React.useState<string>('');
 	const [createSectionMutation] = useCreateSectionMutation({
 		refetchQueries: [{ query: GetSectionsDocument }],
 	});
-	const toggleModal = async () => {
-		await createSectionMutation({ variables: { order: 1 } });
-		// setOpenAddSectionModal(!openAddSectionModal);
+
+	const toggleSectionModal = () => {
+		setOpenAddSectionModal(true);
+	};
+
+	const onSaveSection = async () => {
+		await createSectionMutation({ variables: { order: 1, name: sectionTitle } });
+		resetContent();
+	};
+
+	const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setSectionTitle(e.target.value);
+	};
+
+	const resetContent = () => {
+		setOpenAddSectionModal(false);
+		setSectionTitle('');
 	};
 
 	return (
 		<>
-			<Modal open={openAddSectionModal} onClose={toggleModal}>
-				<div>asdf</div>
+			<Modal
+				open={openAddSectionModal}
+				onClose={resetContent}
+				closeOnOverlayClick
+				center
+				showCloseIcon={false}
+			>
+				<TaskModal
+					title={'Add New Section'}
+					content={sectionTitle}
+					onChange={onChange}
+					onSave={onSaveSection}
+					onClose={resetContent}
+					showDelete={false}
+				/>
 			</Modal>
-			<AddSection onClick={toggleModal}>Add Section</AddSection>
+			<AddSection onClick={toggleSectionModal}>Add Section</AddSection>
 		</>
 	);
 };

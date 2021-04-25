@@ -62,9 +62,9 @@ const Project = () => {
 		// console.log('start, e', e);
 	};
 	//
-	const dragEnd = async (e, a) => {
+	const dragEnd = async e => {
 		setIsDragging(false);
-		console.log('setTargetSectionId', targetSectionId);
+		// console.log('end setTargetSectionId', targetSectionId);
 		console.log('dragend', e);
 		// console.log('end, e', e);
 		const { oldIndex, newIndex } = e;
@@ -86,7 +86,8 @@ const Project = () => {
 		// 	},
 		// });
 	};
-	const onMouseUp = targetSectionId => e => {
+	const onMouseUp = e => {
+		console.log('targetSection on mouse up', e.currentTarget);
 		setTargetSectionId(Number(targetSectionId));
 	};
 
@@ -103,7 +104,6 @@ const Project = () => {
 				<TaskModal
 					title={'Add New Task'}
 					content={content}
-					setModal={setModal}
 					onChange={onChange}
 					onSave={addNewTask}
 					onClose={resetContent}
@@ -113,8 +113,12 @@ const Project = () => {
 			<SectionWrapper>
 				{data?.getSections.map(section => (
 					<TaskSection key={section.id} currentSectionId={sectionId} mySectionId={section.id}>
-						<AddButton onClick={() => setModal(true, section.id)} />
-						<SectionList onMouseUp={onMouseUp(section.id)}>
+						<SectionTitle>{section.name}</SectionTitle>
+						<AddButton
+							onClick={() => setModal(true, section.id)}
+							taskLength={section.tasks.length}
+						/>
+						<SectionList onMouseUp={onMouseUp} id={String(section.id)}>
 							{section?.tasks && (
 								<ReactSortable
 									group={'myGroup'}
@@ -126,7 +130,6 @@ const Project = () => {
 									forceFallback={true}
 									onStart={dragStart}
 									onEnd={dragEnd}
-									onSort={onMouseUp}
 								>
 									{section?.tasks.map((task: Task, index: number) => (
 										<TaskCard
@@ -167,4 +170,11 @@ const SectionWrapper = styled.div`
 
 const SectionList = styled.div`
 	display: block;
+`;
+
+const SectionTitle = styled.div`
+	font-size: 17px;
+	margin-bottom: 5px;
+	margin-left: 2px;
+	font-weight: 600;
 `;

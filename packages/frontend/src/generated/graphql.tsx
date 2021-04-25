@@ -89,7 +89,7 @@ export type MutationChangeTaskOrderArgs = {
 
 
 export type MutationCreateSectionArgs = {
-  order: Scalars['Float'];
+  newData: CreateSectionInput;
 };
 
 export type TaskInput = {
@@ -114,8 +114,14 @@ export type TaskChange = {
   targetOrder: Scalars['Float'];
 };
 
+export type CreateSectionInput = {
+  name: Scalars['String'];
+  order: Scalars['Float'];
+};
+
 export type CreateSectionMutationVariables = Exact<{
   order: Scalars['Float'];
+  name: Scalars['String'];
 }>;
 
 
@@ -134,7 +140,7 @@ export type GetSectionsQuery = (
   { __typename?: 'Query' }
   & { getSections: Array<(
     { __typename?: 'Section' }
-    & Pick<Section, 'id' | 'order'>
+    & Pick<Section, 'id' | 'name' | 'order'>
     & { tasks: Array<(
       { __typename?: 'Task' }
       & Pick<Task, 'id' | 'content' | 'order'>
@@ -210,8 +216,8 @@ export type GetTasksQuery = (
 
 
 export const CreateSectionDocument = gql`
-    mutation CreateSection($order: Float!) {
-  createSection(order: $order) {
+    mutation CreateSection($order: Float!, $name: String!) {
+  createSection(newData: {order: $order, name: $name}) {
     id
     name
     order
@@ -234,6 +240,7 @@ export type CreateSectionMutationFn = Apollo.MutationFunction<CreateSectionMutat
  * const [createSectionMutation, { data, loading, error }] = useCreateSectionMutation({
  *   variables: {
  *      order: // value for 'order'
+ *      name: // value for 'name'
  *   },
  * });
  */
@@ -248,6 +255,7 @@ export const GetSectionsDocument = gql`
     query GetSections {
   getSections {
     id
+    name
     order
     tasks {
       id

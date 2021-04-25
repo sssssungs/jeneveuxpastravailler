@@ -3,7 +3,6 @@ import * as React from 'react';
 
 interface Props {
 	title: string;
-	setModal: (value: boolean) => void;
 	content: string;
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onSave: () => void;
