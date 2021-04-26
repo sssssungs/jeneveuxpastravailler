@@ -112,8 +112,12 @@ const Project = () => {
 			</Modal>
 			<SectionWrapper>
 				{data?.getSections.map(section => (
-					<TaskSection key={section.id} currentSectionId={sectionId} mySectionId={section.id}>
-						<SectionTitle>{section.name}</SectionTitle>
+					<TaskSection
+						key={section.id}
+						currentSectionId={sectionId}
+						mySectionId={section.id}
+						sectionName={section.name}
+					>
 						<AddButton
 							onClick={() => setModal(true, section.id)}
 							taskLength={section.tasks.length}
@@ -170,11 +174,4 @@ const SectionWrapper = styled.div`
 
 const SectionList = styled.div`
 	display: block;
-`;
-
-const SectionTitle = styled.div`
-	font-size: 17px;
-	margin-bottom: 5px;
-	margin-left: 2px;
-	font-weight: 600;
 `;

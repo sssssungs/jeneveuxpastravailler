@@ -91,7 +91,6 @@ const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
 				<TaskModal
 					title={'Modify your contents'}
 					content={content}
-					setModal={setModal}
 					onChange={onChange}
 					onSave={updateTaskContent}
 					onClose={resetContent}

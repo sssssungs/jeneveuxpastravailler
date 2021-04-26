@@ -17,6 +17,7 @@ const global = (theme: Theme) => css`
 	}
 
 	textarea,
+	input,
 	button {
 		font-family: 'InfinitySans-RegularA1', sans-serif;
 		outline: 0;
