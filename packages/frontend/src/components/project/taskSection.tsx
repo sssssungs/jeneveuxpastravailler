@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { GetSectionsDocument, useUpdateSectionNameMutation } from 'generated/graphql';
 import * as React from 'react';
 import { AddButtonWrapper } from './addButton';
 
@@ -13,14 +14,20 @@ const TaskSection = ({ children, currentSectionId, mySectionId, sectionName }: P
 	const [modifyMode, setModifyMode] = React.useState<boolean>(false);
 	const [currentSectionName, setCurrentSectionName] = React.useState<string>(sectionName);
 	const inputRef = React.useRef<HTMLInputElement>(null);
+	const [useUpdateSectionName] = useUpdateSectionNameMutation({
+		refetchQueries: [{ query: GetSectionsDocument }],
+	});
 
 	const onChangeSectionName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setCurrentSectionName(e.target.value);
 	};
 
-	const onBlurSectionTitleInput = e => {
+	const onBlurSectionTitleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		setCurrentSectionName(e.target.value);
 		setModifyMode(false);
-		window.alert('저장하긔!');
+		await useUpdateSectionName({
+			variables: { sectionId: mySectionId, title: currentSectionName },
+		});
 	};
 
 	const onClickSectionTitle = () => {
@@ -33,6 +40,9 @@ const TaskSection = ({ children, currentSectionId, mySectionId, sectionName }: P
 		}
 	}, [modifyMode]);
 
+	const onKeyDownSectionTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') inputRef.current.blur();
+	};
 	return (
 		<SectionLayout currentSectionId={currentSectionId} mySectionId={mySectionId}>
 			{modifyMode ? (
@@ -40,6 +50,7 @@ const TaskSection = ({ children, currentSectionId, mySectionId, sectionName }: P
 					value={currentSectionName}
 					onChange={onChangeSectionName}
 					onBlur={onBlurSectionTitleInput}
+					onKeyDown={onKeyDownSectionTitle}
 					ref={inputRef}
 				/>
 			) : (

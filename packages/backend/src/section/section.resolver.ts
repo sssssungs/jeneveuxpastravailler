@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SectionService } from '../section/section.service';
 import { Section } from './section.entity';
-import { CreateSectionInput } from './section.input';
+import { CreateSectionInput, UpdateSectionName } from './section.input';
 
 @Resolver(() => Section)
 export class SectionResolver {
@@ -14,5 +14,10 @@ export class SectionResolver {
 	@Mutation(() => Section)
 	async createSection(@Args('newData') newData: CreateSectionInput) {
 		return await this.sectionService.createSection(newData);
+	}
+
+	@Mutation(() => Section)
+	async updateSectionName(@Args('newData') newData: UpdateSectionName) {
+		return await this.sectionService.updateSection(newData);
 	}
 }

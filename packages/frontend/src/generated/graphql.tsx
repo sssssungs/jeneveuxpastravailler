@@ -65,6 +65,7 @@ export type Mutation = {
   deleteTask: Scalars['Boolean'];
   changeTaskOrder: Array<TaskDto>;
   createSection: Section;
+  updateSectionName: Section;
 };
 
 
@@ -90,6 +91,11 @@ export type MutationChangeTaskOrderArgs = {
 
 export type MutationCreateSectionArgs = {
   newData: CreateSectionInput;
+};
+
+
+export type MutationUpdateSectionNameArgs = {
+  newData: UpdateSectionName;
 };
 
 export type TaskInput = {
@@ -119,6 +125,11 @@ export type CreateSectionInput = {
   order: Scalars['Float'];
 };
 
+export type UpdateSectionName = {
+  id: Scalars['Float'];
+  name: Scalars['String'];
+};
+
 export type CreateSectionMutationVariables = Exact<{
   order: Scalars['Float'];
   name: Scalars['String'];
@@ -130,6 +141,20 @@ export type CreateSectionMutation = (
   & { createSection: (
     { __typename?: 'Section' }
     & Pick<Section, 'id' | 'name' | 'order'>
+  ) }
+);
+
+export type UpdateSectionNameMutationVariables = Exact<{
+  sectionId: Scalars['Float'];
+  title: Scalars['String'];
+}>;
+
+
+export type UpdateSectionNameMutation = (
+  { __typename?: 'Mutation' }
+  & { updateSectionName: (
+    { __typename?: 'Section' }
+    & Pick<Section, 'id' | 'name'>
   ) }
 );
 
@@ -251,6 +276,41 @@ export function useCreateSectionMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateSectionMutationHookResult = ReturnType<typeof useCreateSectionMutation>;
 export type CreateSectionMutationResult = Apollo.MutationResult<CreateSectionMutation>;
 export type CreateSectionMutationOptions = Apollo.BaseMutationOptions<CreateSectionMutation, CreateSectionMutationVariables>;
+export const UpdateSectionNameDocument = gql`
+    mutation UpdateSectionName($sectionId: Float!, $title: String!) {
+  updateSectionName(newData: {id: $sectionId, name: $title}) {
+    id
+    name
+  }
+}
+    `;
+export type UpdateSectionNameMutationFn = Apollo.MutationFunction<UpdateSectionNameMutation, UpdateSectionNameMutationVariables>;
+
+/**
+ * __useUpdateSectionNameMutation__
+ *
+ * To run a mutation, you first call `useUpdateSectionNameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSectionNameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSectionNameMutation, { data, loading, error }] = useUpdateSectionNameMutation({
+ *   variables: {
+ *      sectionId: // value for 'sectionId'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useUpdateSectionNameMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSectionNameMutation, UpdateSectionNameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateSectionNameMutation, UpdateSectionNameMutationVariables>(UpdateSectionNameDocument, options);
+      }
+export type UpdateSectionNameMutationHookResult = ReturnType<typeof useUpdateSectionNameMutation>;
+export type UpdateSectionNameMutationResult = Apollo.MutationResult<UpdateSectionNameMutation>;
+export type UpdateSectionNameMutationOptions = Apollo.BaseMutationOptions<UpdateSectionNameMutation, UpdateSectionNameMutationVariables>;
 export const GetSectionsDocument = gql`
     query GetSections {
   getSections {

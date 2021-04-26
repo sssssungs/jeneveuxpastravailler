@@ -7,3 +7,11 @@ export class CreateSectionInput {
 	@Field()
 	readonly order: number;
 }
+
+@InputType()
+export class UpdateSectionName {
+	@Field()
+	readonly id: number;
+	@Field()
+	readonly name: string;
+}
