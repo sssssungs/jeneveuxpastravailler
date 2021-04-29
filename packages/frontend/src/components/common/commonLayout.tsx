@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import LeftMenu from './leftMenu';
 import doodles from 'public/static/images/open-doodles-laying.png';
+import Toggle from 'react-toggle';
 
 interface Props {
 	current: string;
@@ -9,11 +10,27 @@ interface Props {
 }
 
 const CommonLayout = ({ current, children }: Props) => {
+	const [isLight, setIsLight] = React.useState<boolean>(false);
+	const onChangeDarkToggle = () => {
+		setIsLight(!isLight);
+	};
 	return (
 		<>
 			<SiteLayout>
 				<LeftMenuSection>
-					<LeftMenu current={current} />
+					<LeftMenuListSection>
+						<LeftMenu current={current} />
+					</LeftMenuListSection>
+					<LeftMenuToggleSection>
+						<ToggleText>L</ToggleText>
+						<Toggle
+							className={'toggle-class'}
+							defaultChecked={isLight}
+							icons={false}
+							onChange={onChangeDarkToggle}
+						/>
+						<ToggleText>D</ToggleText>
+					</LeftMenuToggleSection>
 				</LeftMenuSection>
 				<RightContentsSection>{children}</RightContentsSection>
 			</SiteLayout>
@@ -30,9 +47,33 @@ const SiteLayout = styled.div`
 `;
 
 const LeftMenuSection = styled.div`
-	width: 100px;
 	height: 100%;
+`;
+
+const ToggleText = styled.div`
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 17px;
+	font-weight: 600;
+`;
+
+const LeftMenuToggleSection = styled.div`
+	display: flex;
+	width: 100%;
+	height: 30px;
+	margin-top: 15px;
+	justify-content: center;
+	align-items: center;
+	.toggle-class.react-toggle--checked .react-toggle-track {
+		background-color: gray;
+	}
+`;
+
+const LeftMenuListSection = styled.div`
+	width: 100px;
 	position: sticky;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	border-radius: 10px;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 10px lightgrey;

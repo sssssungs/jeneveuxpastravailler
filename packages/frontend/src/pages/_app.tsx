@@ -6,6 +6,7 @@ import { css, Global, ThemeProvider } from '@emotion/react';
 import { Theme, theme } from 'styles/theme';
 import { font } from 'styles/font';
 import 'react-responsive-modal/styles.css';
+import 'react-toggle/style.css';
 
 const global = (theme: Theme) => css`
 	${font};
