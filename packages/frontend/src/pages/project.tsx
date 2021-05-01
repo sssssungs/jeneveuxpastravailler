@@ -11,7 +11,7 @@ import { Modal } from 'react-responsive-modal';
 import TaskModal from '../components/project/taskModal';
 import AddButton from '../components/project/addButton';
 import TaskSection from '../components/project/taskSection';
-import { GET_SECTIONS } from '../graphql/section/query/getSections';
+import { GET_SECTIONS } from '../graphql/gen/section/query/getSections';
 import { ReactSortable } from 'react-sortablejs';
 import TaskCard from 'components/project/taskCard';
 import styled from '@emotion/styled';
@@ -19,6 +19,7 @@ import AddSectionButton from '../components/project/addSectionButton';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
+
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	const [content, setContent] = React.useState<string>('');
 	const [sectionId, setSectionId] = React.useState<number>(-1);

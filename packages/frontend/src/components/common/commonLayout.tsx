@@ -3,6 +3,9 @@ import styled from '@emotion/styled';
 import LeftMenu from './leftMenu';
 import doodles from 'public/static/images/open-doodles-laying.png';
 import Toggle from 'react-toggle';
+import { useQuery } from '@apollo/react-hooks';
+import GetAppConfig from '../../graphql/common/getAppConfig';
+import appConfigVar from '../../config/appConfigVar';
 
 interface Props {
 	current: string;
@@ -11,9 +14,19 @@ interface Props {
 
 const CommonLayout = ({ current, children }: Props) => {
 	const [isLight, setIsLight] = React.useState<boolean>(false);
+	const {
+		data: { appConfig },
+	} = useQuery(GetAppConfig);
+
 	const onChangeDarkToggle = () => {
 		setIsLight(!isLight);
 	};
+
+	React.useEffect(() => {
+		console.log('config-------', appConfig);
+		appConfigVar({ isLightMode: !isLight });
+	}, [isLight]);
+
 	return (
 		<>
 			<SiteLayout>

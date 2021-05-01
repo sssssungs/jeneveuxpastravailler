@@ -3,6 +3,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import _merge from 'lodash/merge';
 import { NormalizedCacheObject } from 'apollo-boost';
 import { GRAPHQL_API } from './config/graphqlApi';
+import appConfigVar from './config/appConfigVar';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> = null;
 
@@ -17,9 +18,9 @@ function createApolloClient() {
 			typePolicies: {
 				Query: {
 					fields: {
-						getTasks: {
-							merge(existing, incoming) {
-								return incoming;
+						appConfig: {
+							read() {
+								return appConfigVar();
 							},
 						},
 					},

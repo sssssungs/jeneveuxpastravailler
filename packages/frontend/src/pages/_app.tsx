@@ -7,6 +7,8 @@ import { Theme, theme } from 'styles/theme';
 import { font } from 'styles/font';
 import 'react-responsive-modal/styles.css';
 import 'react-toggle/style.css';
+import { useQuery } from '@apollo/react-hooks';
+import getAppConfig from '../graphql/common/getAppConfig';
 
 const global = (theme: Theme) => css`
 	${font};
