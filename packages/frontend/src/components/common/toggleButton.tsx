@@ -3,17 +3,17 @@ import styled from '@emotion/styled';
 import Toggle from 'react-toggle';
 
 interface Props {
-	isLight: boolean;
+	isDark: boolean;
 	onChangeDarkToggle: () => void;
 }
 
-const ToggleButton = ({ isLight, onChangeDarkToggle }: Props) => {
+const ToggleButton = ({ isDark, onChangeDarkToggle }: Props) => {
 	return (
 		<ToggleSection>
 			<ToggleText>L</ToggleText>
 			<Toggle
 				className={'toggle-class'}
-				defaultChecked={!isLight}
+				checked={isDark}
 				icons={false}
 				onChange={onChangeDarkToggle}
 			/>

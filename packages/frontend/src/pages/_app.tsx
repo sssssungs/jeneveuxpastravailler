@@ -29,10 +29,17 @@ const global = (theme: Theme) => css`
 
 function App({ Component, pageProps }: AppProps) {
 	const apolloClient = useApollo(pageProps.initialApolloState);
-	const [isLight, setIsLight] = React.useState<boolean>(true);
+	const [isDark, setIsDark] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		console.log('a', Boolean(localStorage.getItem('mode')));
+		setIsDark(localStorage.getItem('mode') === 'true');
+	}, []);
 
 	const onChangeDarkToggle = () => {
-		setIsLight(!isLight);
+		console.log('!isDark', !isDark);
+		localStorage.setItem('mode', String(!isDark));
+		setIsDark(!isDark);
 	};
 
 	return (
@@ -44,11 +51,11 @@ function App({ Component, pageProps }: AppProps) {
 				/>
 				<title>Je ne veux pas travailler</title>
 			</Head>
-			<ThemeProvider theme={{ ...theme, colors: themeColors[isLight ? 'light' : 'dark'] }}>
+			<ThemeProvider theme={{ ...theme, colors: themeColors[isDark ? 'dark' : 'light'] }}>
 				<Global styles={theme => global(theme as Theme)} />
 				<ApolloProvider client={apolloClient}>
 					<Component {...pageProps} />
-					<ToggleButton isLight={isLight} onChangeDarkToggle={onChangeDarkToggle} />
+					<ToggleButton isDark={isDark} onChangeDarkToggle={onChangeDarkToggle} />
 				</ApolloProvider>
 			</ThemeProvider>
 		</>
