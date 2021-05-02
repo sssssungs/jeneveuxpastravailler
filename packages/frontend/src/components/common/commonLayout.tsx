@@ -2,10 +2,6 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import LeftMenu from './leftMenu';
 import doodles from 'public/static/images/open-doodles-laying.png';
-import Toggle from 'react-toggle';
-import { useQuery } from '@apollo/react-hooks';
-import GetAppConfig from '../../graphql/common/getAppConfig';
-import appConfigVar from '../../config/appConfigVar';
 
 interface Props {
 	current: string;
@@ -13,20 +9,6 @@ interface Props {
 }
 
 const CommonLayout = ({ current, children }: Props) => {
-	const [isLight, setIsLight] = React.useState<boolean>(false);
-	const {
-		data: { appConfig },
-	} = useQuery(GetAppConfig);
-
-	const onChangeDarkToggle = () => {
-		setIsLight(!isLight);
-	};
-
-	React.useEffect(() => {
-		console.log('config-------', appConfig);
-		appConfigVar({ isLightMode: !isLight });
-	}, [isLight]);
-
 	return (
 		<>
 			<SiteLayout>
@@ -34,16 +16,6 @@ const CommonLayout = ({ current, children }: Props) => {
 					<LeftMenuListSection>
 						<LeftMenu current={current} />
 					</LeftMenuListSection>
-					<LeftMenuToggleSection>
-						<ToggleText>L</ToggleText>
-						<Toggle
-							className={'toggle-class'}
-							defaultChecked={isLight}
-							icons={false}
-							onChange={onChangeDarkToggle}
-						/>
-						<ToggleText>D</ToggleText>
-					</LeftMenuToggleSection>
 				</LeftMenuSection>
 				<RightContentsSection>{children}</RightContentsSection>
 			</SiteLayout>
@@ -61,25 +33,6 @@ const SiteLayout = styled.div`
 
 const LeftMenuSection = styled.div`
 	height: 100%;
-`;
-
-const ToggleText = styled.div`
-	margin-left: 5px;
-	margin-right: 5px;
-	font-size: 17px;
-	font-weight: 600;
-`;
-
-const LeftMenuToggleSection = styled.div`
-	display: flex;
-	width: 100%;
-	height: 30px;
-	margin-top: 15px;
-	justify-content: center;
-	align-items: center;
-	.toggle-class.react-toggle--checked .react-toggle-track {
-		background-color: gray;
-	}
 `;
 
 const LeftMenuListSection = styled.div`

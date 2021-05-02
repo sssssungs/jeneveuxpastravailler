@@ -68,7 +68,7 @@ const SectionTitleModify = styled.input`
 	margin-bottom: 5px;
 	font-weight: 600;
 	box-sizing: border-box;
-	background-color: ${props => props.theme.colors.light.SHADOW};
+	background-color: ${props => props.theme.colors.SHADOW};
 `;
 
 const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`

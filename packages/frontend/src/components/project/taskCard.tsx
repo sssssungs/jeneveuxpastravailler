@@ -2,14 +2,12 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import {
 	GetSectionsDocument,
-	GetTasksDocument,
 	Task,
 	useDeleteTaskMutation,
 	useUpdateTaskContentMutation,
 } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
-import { AddButtonWrapper } from './addButton';
 
 interface Props {
 	task: Task;
@@ -113,17 +111,17 @@ export const TaskCardWrapper = styled.div<{ modalOpen: boolean; isDragging: bool
 	white-space: normal;
 	word-break: break-all;
 	overflow-y: auto;
-	background-color: ${props => props.theme.colors.light.BACKGROUND};
+	background-color: ${props => props.theme.colors.BACKGROUND};
 	padding: ${props => props.theme.spacing.m};
 	border-radius: ${props => props.theme.spacing.m};
-	border: 1px solid ${props => props.theme.colors.light.G_100};
+	border: 1px solid ${props => props.theme.colors.G_100};
 	margin-bottom: 15px;
 	box-shadow: 2px 2px 5px
-		${props => (props.modalOpen ? props.theme.colors.light.B_300 : props.theme.colors.light.SHADOW)};
+		${props => (props.modalOpen ? props.theme.colors.B_300 : props.theme.colors.SHADOW)};
 
 	&:hover {
 		cursor: move;
-		box-shadow: 2px 2px 5px ${props => props.theme.colors.light.G_200};
+		box-shadow: 2px 2px 5px ${props => props.theme.colors.G_200};
 		& div {
 			visibility: ${props => !props.isDragging && 'visible'};
 		}
@@ -142,7 +140,7 @@ const MoreButton = styled.div`
 	visibility: hidden;
 	&:hover {
 		cursor: pointer;
-		background-color: ${props => props.theme.colors.light.SHADOW};
+		background-color: ${props => props.theme.colors.SHADOW};
 	}
 `;
 

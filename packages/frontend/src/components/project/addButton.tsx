@@ -27,15 +27,16 @@ export const AddButtonWrapper = styled.button<{ taskLength: number }>`
 	height: 70px;
 	box-sizing: border-box;
 	font-size: 35px;
-	color: ${props => props.theme.colors.light.G_100};
+	color: ${props => props.theme.colors.G_100};
+	background-color: ${props => props.theme.colors.SHADOW};
 	padding: ${props => props.theme.spacing.m};
 	border-radius: ${props => props.theme.spacing.m};
-	border: 1px solid ${props => props.theme.colors.light.G_100};
+	border: 1px solid ${props => props.theme.colors.G_100};
 	margin-bottom: 15px;
-	box-shadow: 2px 2px 5px ${props => props.theme.colors.light.SHADOW};
+	box-shadow: 2px 2px 5px ${props => props.theme.colors.SHADOW};
 	&:hover {
 		cursor: pointer;
-		color: ${props => props.theme.colors.light.G_200};
-		box-shadow: 2px 2px 5px ${props => props.theme.colors.light.G_200};
+		color: ${props => props.theme.colors.G_200};
+		box-shadow: 2px 2px 5px ${props => props.theme.colors.G_200};
 	}
 `;

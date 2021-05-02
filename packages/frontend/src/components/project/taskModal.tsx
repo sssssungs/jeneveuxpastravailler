@@ -69,7 +69,7 @@ const TaskContent = styled.textarea`
 	resize: none;
 	padding: ${props => props.theme.spacing.m};
 	border-radius: ${props => props.theme.spacing.m};
-	border: 1px solid ${props => props.theme.colors.light.SHADOW};
+	border: 1px solid ${props => props.theme.colors.SHADOW};
 `;
 
 const TaskModalBottom = styled.div`
@@ -82,12 +82,12 @@ const SaveButton = styled.button`
 	width: 100px;
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
-	background-color: ${props => props.theme.colors.dark.B_200};
+	background-color: ${props => props.theme.colors.B_200};
 	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
-		color: ${props => props.theme.colors.light.BACKGROUND};
-		background-color: ${props => props.theme.colors.light.B_100};
+		color: ${props => props.theme.colors.BACKGROUND};
+		background-color: ${props => props.theme.colors.B_100};
 	}
 `;
 
@@ -95,13 +95,13 @@ const CancelButton = styled.button`
 	width: 100px;
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
-	background-color: ${props => props.theme.colors.dark.R_200};
+	background-color: ${props => props.theme.colors.R_200};
 	margin-left: ${props => props.theme.spacing.m};
 	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
-		color: ${props => props.theme.colors.light.BACKGROUND};
-		background-color: ${props => props.theme.colors.light.R_100};
+		color: ${props => props.theme.colors.BACKGROUND};
+		background-color: ${props => props.theme.colors.R_100};
 	}
 `;
 
@@ -109,12 +109,12 @@ const DeleteButton = styled.button`
 	width: 100px;
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
-	background-color: ${props => props.theme.colors.dark.O_200};
+	background-color: ${props => props.theme.colors.O_200};
 	margin-left: ${props => props.theme.spacing.m};
 	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
-		color: ${props => props.theme.colors.light.BACKGROUND};
-		background-color: ${props => props.theme.colors.light.O_100};
+		color: ${props => props.theme.colors.BACKGROUND};
+		background-color: ${props => props.theme.colors.O_100};
 	}
 `;
