@@ -32,7 +32,6 @@ function App({ Component, pageProps }: AppProps) {
 	const [isDark, setIsDark] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		console.log('a', Boolean(localStorage.getItem('mode')));
 		setIsDark(localStorage.getItem('mode') === 'true');
 	}, []);
 
@@ -54,7 +53,7 @@ function App({ Component, pageProps }: AppProps) {
 			<ThemeProvider theme={{ ...theme, colors: themeColors[isDark ? 'dark' : 'light'] }}>
 				<Global styles={theme => global(theme as Theme)} />
 				<ApolloProvider client={apolloClient}>
-					<Component {...pageProps} />
+					<Component {...pageProps} colorMode={themeColors[isDark ? 'dark' : 'light'].G_100} />
 					<ToggleButton isDark={isDark} onChangeDarkToggle={onChangeDarkToggle} />
 				</ApolloProvider>
 			</ThemeProvider>

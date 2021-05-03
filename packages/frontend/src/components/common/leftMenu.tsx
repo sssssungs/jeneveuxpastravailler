@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 import Link from 'next/link';
 import { route } from 'routes';
-import { useApolloClient } from '@apollo/react-hooks';
 
 interface Props {
 	current: string;
@@ -11,10 +10,10 @@ interface Props {
 const LeftMenu = ({ current }: Props) => {
 	return (
 		<LeftMenuList>
-			{route.map(menu => (
+			{route().map(menu => (
 				<LeftMenuItems key={menu.link} active={menu.link === `/${current}`}>
 					<Link href={menu.link} as={menu.as}>
-						<img src={menu.icon} alt={'a'} width={'100%'} />
+						<Icons>{menu.icon}</Icons>
 					</Link>
 				</LeftMenuItems>
 			))}
@@ -23,6 +22,13 @@ const LeftMenu = ({ current }: Props) => {
 };
 
 export default LeftMenu;
+
+const Icons = styled.div`
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+`;
 
 const LeftMenuList = styled.ul`
 	display: flex;
