@@ -42,11 +42,11 @@ const LeftMenuListSection = styled.div`
 	padding-bottom: 5px;
 	border-radius: 10px;
 	box-sizing: border-box;
-	box-shadow: 3px 3px 10px lightgrey;
+	box-shadow: 3px 3px 10px 2px ${props => props.theme.colors.SHADOW};
 `;
 
 const RightContentsSection = styled.div`
-	padding: 15px;
+	padding: 15px 15px 15px 25px;
 	width: 100%;
 	min-height: 90vh;
 	&:after {

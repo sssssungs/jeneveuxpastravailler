@@ -64,10 +64,10 @@ const AddSection = styled.button`
 	color: ${props => props.theme.colors.G_200};
 	background-color: ${props => props.theme.colors.BACKGROUND};
 	border: 1px solid ${props => props.theme.colors.G_100};
-	box-shadow: 2px 2px 3px ${props => props.theme.colors.G_100};
+	box-shadow: 2px 2px 3px ${props => props.theme.colors.SHADOW};
 	border-radius: ${props => props.theme.spacing.l};
 	cursor: pointer;
 	&:hover {
-		box-shadow: 2px 2px 5px ${props => props.theme.colors.G_300};
+		box-shadow: 2px 2px 5px ${props => props.theme.colors.SHADOW};
 	}
 `;
