@@ -61,6 +61,7 @@ const TaskTitle = styled.div`
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 10px;
+	color: ${props => props.theme.colors.G_100};
 `;
 
 const TaskContent = styled.textarea`
@@ -70,6 +71,8 @@ const TaskContent = styled.textarea`
 	padding: ${props => props.theme.spacing.m};
 	border-radius: ${props => props.theme.spacing.m};
 	border: 1px solid ${props => props.theme.colors.SHADOW};
+	background-color: ${props => props.theme.colors.BACKGROUND};
+	color: ${props => props.theme.colors.G_100};
 `;
 
 const TaskModalBottom = styled.div`
@@ -83,6 +86,7 @@ const SaveButton = styled.button`
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
 	background-color: ${props => props.theme.colors.B_200};
+	color: ${props => props.theme.colors.BACKGROUND};
 	text-transform: uppercase;
 	&:hover {
 		cursor: pointer;
@@ -95,6 +99,7 @@ const CancelButton = styled.button`
 	width: 100px;
 	height: 30px;
 	border-radius: ${props => props.theme.spacing.m};
+	color: ${props => props.theme.colors.BACKGROUND};
 	background-color: ${props => props.theme.colors.R_200};
 	margin-left: ${props => props.theme.spacing.m};
 	text-transform: uppercase;

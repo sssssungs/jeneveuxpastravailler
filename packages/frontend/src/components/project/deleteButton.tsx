@@ -6,20 +6,20 @@ interface Props {
 	taskLength: number;
 }
 
-const AddButton = ({ onClick, taskLength }: Props) => {
+const DeleteButton = ({ onClick, taskLength }: Props) => {
 	const clickAddButton = () => {
 		onClick(true);
 	};
 	return (
-		<AddButtonWrapper onClick={clickAddButton} taskLength={taskLength}>
-			+
-		</AddButtonWrapper>
+		<DeleteButtonWrapper onClick={clickAddButton} taskLength={taskLength}>
+			-
+		</DeleteButtonWrapper>
 	);
 };
 
-export default AddButton;
+export default DeleteButton;
 
-export const AddButtonWrapper = styled.button<{ taskLength: number }>`
+export const DeleteButtonWrapper = styled.button<{ taskLength: number }>`
 	display: ${props => (props.taskLength !== 0 ? 'none' : 'block')};
 	justify-content: center;
 	align-items: center;
@@ -36,7 +36,7 @@ export const AddButtonWrapper = styled.button<{ taskLength: number }>`
 	box-shadow: 2px 2px 5px ${props => props.theme.colors.SHADOW};
 	&:hover {
 		cursor: pointer;
-		color: ${props => props.theme.colors.B_200};
+		color: ${props => props.theme.colors.O_300};
 		box-shadow: 2px 2px 5px ${props => props.theme.colors.G_200};
 	}
 `;

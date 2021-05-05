@@ -25,6 +25,9 @@ const global = (theme: Theme) => css`
 		outline: 0;
 		border: 0;
 	}
+	.customModal {
+		background-color: ${theme.colors.BACKGROUND};
+	}
 `;
 
 function App({ Component, pageProps }: AppProps) {
@@ -36,7 +39,6 @@ function App({ Component, pageProps }: AppProps) {
 	}, []);
 
 	const onChangeDarkToggle = () => {
-		console.log('!isDark', !isDark);
 		localStorage.setItem('mode', String(!isDark));
 		setIsDark(!isDark);
 	};

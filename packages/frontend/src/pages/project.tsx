@@ -16,6 +16,7 @@ import { ReactSortable } from 'react-sortablejs';
 import TaskCard from 'components/project/taskCard';
 import styled from '@emotion/styled';
 import AddSectionButton from '../components/project/addSectionButton';
+import DeleteButton from '../components/project/deleteButton';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
@@ -100,6 +101,9 @@ const Project = () => {
 				onClose={resetContent}
 				closeOnOverlayClick
 				center
+				classNames={{
+					modal: 'customModal',
+				}}
 				showCloseIcon={false}
 			>
 				<TaskModal
@@ -120,6 +124,10 @@ const Project = () => {
 						sectionName={section.name}
 					>
 						<AddButton
+							onClick={() => setModal(true, section.id)}
+							taskLength={section.tasks.length}
+						/>
+						<DeleteButton
 							onClick={() => setModal(true, section.id)}
 							taskLength={section.tasks.length}
 						/>
