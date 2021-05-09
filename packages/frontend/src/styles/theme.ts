@@ -45,7 +45,7 @@ export const colors = {
 
 export type Theme = {
 	colors: typeof dark | typeof light;
-	size: {
+	breakPoints: {
 		[key: string]: number;
 	};
 	spacing: {
@@ -55,7 +55,7 @@ export type Theme = {
 
 export const theme: Theme = {
 	colors: light,
-	size: {
+	breakPoints: {
 		m: 768,
 		l: 992,
 		xl: 1200,
