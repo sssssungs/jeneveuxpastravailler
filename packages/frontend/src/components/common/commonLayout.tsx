@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import LeftMenu from './leftMenu';
 import doodles from 'public/static/images/open-doodles-laying.png';
+import { mq } from 'styles/mq';
 
 interface Props {
 	current: string;
@@ -10,25 +11,26 @@ interface Props {
 
 const CommonLayout = ({ current, children }: Props) => {
 	return (
-		<>
-			<SiteLayout>
-				<LeftMenuSection>
-					<LeftMenuListSection>
-						<LeftMenu current={current} />
-					</LeftMenuListSection>
-				</LeftMenuSection>
-				<RightContentsSection>{children}</RightContentsSection>
-			</SiteLayout>
-		</>
+		<SiteLayout>
+			<LeftMenuSection>
+				<LeftMenuListSection>
+					<LeftMenu current={current} />
+				</LeftMenuListSection>
+			</LeftMenuSection>
+			<RightContentsSection>{children}</RightContentsSection>
+		</SiteLayout>
 	);
 };
 
 export default CommonLayout;
 
 const SiteLayout = styled.div`
-	display: flex;
-	width: 100%;
-	height: 100%;
+	${mq({
+		display: 'flex',
+		width: '100%',
+		height: '100%',
+		color: ['blue', 'red'],
+	})}
 `;
 
 const LeftMenuSection = styled.div`
@@ -46,6 +48,7 @@ const LeftMenuListSection = styled.div`
 `;
 
 const RightContentsSection = styled.div`
+	display: flex;
 	padding: 15px 15px 15px 25px;
 	width: 100%;
 	min-height: 90vh;
