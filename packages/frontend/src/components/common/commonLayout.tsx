@@ -27,9 +27,9 @@ export default CommonLayout;
 const SiteLayout = styled.div`
 	${mq({
 		display: 'flex',
+		flexDirection: ['column', 'column', 'row'],
 		width: '100%',
 		height: '100%',
-		color: ['blue', 'red'],
 	})}
 `;
 

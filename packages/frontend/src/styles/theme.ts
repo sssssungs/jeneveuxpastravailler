@@ -57,7 +57,7 @@ export const theme: Theme = {
 	colors: light,
 	breakPoints: {
 		m: 768,
-		l: 992,
+		l: 1024,
 		xl: 1200,
 	},
 	spacing: {
