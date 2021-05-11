@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { GetSectionsDocument, useUpdateSectionNameMutation } from 'generated/graphql';
 import * as React from 'react';
+import { mq } from 'styles/mq';
 import { AddButtonWrapper } from './addButton';
 
 interface Props {
@@ -72,10 +73,11 @@ const SectionTitleModify = styled.input`
 `;
 
 const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`
+	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	width: fit-content;
-	height: fit-content;
+	width: 100%;
+	//height: fit-content;
 	margin-right: ${props => props.theme.spacing.xl};
 	&:hover {
 		${AddButtonWrapper} {
@@ -85,7 +87,9 @@ const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number
 `;
 
 const TaskSectionWrapper = styled.div`
-	width: fit-content;
+	${mq({
+		width: ['100%', 'fit-content'],
+	})}
 `;
 
 const SectionTitle = styled.div`

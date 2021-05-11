@@ -29,7 +29,7 @@ const SiteLayout = styled.div`
 		display: 'flex',
 		flexDirection: ['column', 'row'],
 		width: '100%',
-		height: '100%',
+		// height: '100%',
 	})}
 `;
 
@@ -57,18 +57,20 @@ const LeftMenuListSection = styled.div`
 const RightContentsSection = styled.div`
 	display: flex;
 	z-index: 1;
-	padding: 15px 15px 15px 25px;
+	${mq({
+		padding: ['15px 0 0 0', '15px 15px 15px 25px'],
+	})};
 	width: 100%;
 	min-height: 90vh;
-	&:after {
-		content: '';
-		position: absolute;
-		right: 15px;
-		bottom: 0;
-		width: 50%;
-		height: 50%;
-		background-image: url(${doodles});
-		background-size: 100%;
-		background-repeat: no-repeat;
-	}
+	// &:after {
+	// 	content: '';
+	// 	position: absolute;
+	// 	right: 15px;
+	// 	bottom: 0;
+	// 	width: 50%;
+	// 	height: 50%;
+	// 	background-image: url(${doodles});
+	// 	background-size: 100%;
+	// 	background-repeat: no-repeat;
+	// }
 `;

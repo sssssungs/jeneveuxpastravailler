@@ -17,6 +17,7 @@ import TaskCard from 'components/project/taskCard';
 import styled from '@emotion/styled';
 import AddSectionButton from '../components/project/addSectionButton';
 import DeleteButton from '../components/project/deleteButton';
+import { mq } from 'styles/mq';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
@@ -175,8 +176,11 @@ export const getServerSideProps = async () => {
 
 const SectionWrapper = styled.div`
 	display: flex;
-	flex-direction: row;
-	max-width: 1400px;
+	${mq({
+		flexDirection: ['column', 'row'],
+		maxWidth: ['100%', '1400px'],
+		width: ['100%', 'inherit'],
+	})};
 	min-height: 97vh;
 	overflow-x: auto;
 `;

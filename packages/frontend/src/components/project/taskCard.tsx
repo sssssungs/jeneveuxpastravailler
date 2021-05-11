@@ -8,6 +8,7 @@ import {
 } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
 import TaskModal from './taskModal';
+import { mq } from 'styles/mq';
 
 interface Props {
 	task: Task;
@@ -103,9 +104,11 @@ const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
 export default TaskCard;
 
 export const TaskCardWrapper = styled.div<{ modalOpen: boolean; isDragging: boolean }>`
+	${mq({
+		width: ['100%', '200px'],
+	})};
 	position: relative;
 	display: flex;
-	width: 200px;
 	height: 70px;
 	box-sizing: border-box;
 	white-space: normal;
