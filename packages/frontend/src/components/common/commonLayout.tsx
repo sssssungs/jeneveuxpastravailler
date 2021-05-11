@@ -27,7 +27,7 @@ export default CommonLayout;
 const SiteLayout = styled.div`
 	${mq({
 		display: 'flex',
-		flexDirection: ['column', 'column', 'row'],
+		flexDirection: ['column', 'row'],
 		width: '100%',
 		height: '100%',
 	})}
@@ -35,11 +35,18 @@ const SiteLayout = styled.div`
 
 const LeftMenuSection = styled.div`
 	height: 100%;
+	position: sticky;
+	${mq({
+		left: [null, 0],
+		top: [0, null],
+	})}
 `;
 
 const LeftMenuListSection = styled.div`
-	width: 100px;
-	position: sticky;
+	${mq({
+		width: ['100%', '100px'],
+	})};
+	z-index: 99;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-radius: 10px;
@@ -49,6 +56,7 @@ const LeftMenuListSection = styled.div`
 
 const RightContentsSection = styled.div`
 	display: flex;
+	z-index: 1;
 	padding: 15px 15px 15px 25px;
 	width: 100%;
 	min-height: 90vh;

@@ -3,6 +3,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { route } from 'routes';
 import { useTheme } from '@emotion/react';
+import { mq } from '../../styles/mq';
 
 interface Props {
 	current: string;
@@ -34,7 +35,11 @@ const Icons = styled.div`
 
 const LeftMenuList = styled.ul`
 	display: flex;
-	flex-direction: column;
+	width: 100%;
+	${mq({
+		flexDirection: ['row', 'column'],
+		justifyContent: ['center', null],
+	})};
 	align-items: center;
 	padding-left: 0;
 `;
@@ -43,7 +48,10 @@ const LeftMenuItems = styled.li<{ active: boolean }>`
 	width: 70px;
 	height: 70px;
 	list-style: none;
-	margin-top: 10px;
+	${mq({
+		marginTop: [0, '10px'],
+		marginLeft: ['10px', 0],
+	})};
 	box-sizing: border-box;
 	border-radius: 10px;
 	box-shadow: ${props => props.active && `2px 2px 5px ${props.theme.colors.SHADOW}`};
