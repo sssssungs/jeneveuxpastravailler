@@ -55,7 +55,7 @@ const AddSectionButton = () => {
 export default AddSectionButton;
 
 const AddSection = styled.button`
-	position: absolute;
+	position: fixed;
 	z-index: 999;
 	bottom: 20px;
 	right: 20px;

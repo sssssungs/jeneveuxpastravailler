@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
+import { mq } from 'styles/mq';
 
 interface Props {
 	onClick: (value: boolean) => void;
@@ -23,7 +24,9 @@ export const DeleteButtonWrapper = styled.button<{ taskLength: number }>`
 	display: ${props => (props.taskLength !== 0 ? 'none' : 'block')};
 	justify-content: center;
 	align-items: center;
-	width: 200px;
+	${mq({
+		width: ['100%', '200px'],
+	})}
 	height: 70px;
 	box-sizing: border-box;
 	font-size: 35px;

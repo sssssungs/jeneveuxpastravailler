@@ -12,12 +12,12 @@ interface Props {
 const CommonLayout = ({ current, children }: Props) => {
 	return (
 		<SiteLayout>
-			<LeftMenuSection>
-				<LeftMenuListSection>
+			<MenuSection>
+				<MenuListSection>
 					<LeftMenu current={current} />
-				</LeftMenuListSection>
-			</LeftMenuSection>
-			<RightContentsSection>{children}</RightContentsSection>
+				</MenuListSection>
+			</MenuSection>
+			<ContentsSection>{children}</ContentsSection>
 		</SiteLayout>
 	);
 };
@@ -33,20 +33,20 @@ const SiteLayout = styled.div`
 	})}
 `;
 
-const LeftMenuSection = styled.div`
+const MenuSection = styled.div`
 	height: 100%;
-	position: sticky;
+	//position: sticky;
 	${mq({
 		left: [null, 0],
 		top: [0, null],
 	})}
 `;
 
-const LeftMenuListSection = styled.div`
+const MenuListSection = styled.div`
 	${mq({
-		width: ['100%', '100px'],
+		position: ['fixed', 'relative'],
+		width: [`calc(100% - 15px)`, '100px'],
 	})};
-	z-index: 99;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-radius: 10px;
@@ -54,23 +54,26 @@ const LeftMenuListSection = styled.div`
 	box-shadow: 3px 3px 10px 2px ${props => props.theme.colors.SHADOW};
 `;
 
-const RightContentsSection = styled.div`
+const ContentsSection = styled.div`
 	display: flex;
 	z-index: 1;
 	${mq({
-		padding: ['15px 0 0 0', '15px 15px 15px 25px'],
+		position: ['absolute', 'relative'],
+		top: ['120px', 0],
+		padding: ['15px 15px 0 0', '15px 15px 15px 25px'],
+		width: [`calc(100% - 15px)`, '100%'],
 	})};
-	width: 100%;
-	min-height: 90vh;
-	// &:after {
-	// 	content: '';
-	// 	position: absolute;
-	// 	right: 15px;
-	// 	bottom: 0;
-	// 	width: 50%;
-	// 	height: 50%;
-	// 	background-image: url(${doodles});
-	// 	background-size: 100%;
-	// 	background-repeat: no-repeat;
-	// }
+	height: calc(100% - 120px);
+	overflow-y: auto;
+	&:after {
+		content: '';
+		position: fixed;
+		right: 15px;
+		bottom: 0;
+		width: 50%;
+		height: 50%;
+		background-image: url(${doodles});
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
 `;

@@ -129,10 +129,6 @@ export const TaskCardWrapper = styled.div<{ modalOpen: boolean; isDragging: bool
 			visibility: ${props => !props.isDragging && 'visible'};
 		}
 	}
-
-	&:last-of-type {
-		margin-bottom: 0;
-	}
 `;
 
 const MoreButton = styled.div`

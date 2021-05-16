@@ -73,7 +73,6 @@ const SectionTitleModify = styled.input`
 `;
 
 const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`
-	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	width: 100%;

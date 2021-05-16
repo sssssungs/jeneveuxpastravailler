@@ -183,6 +183,7 @@ const SectionWrapper = styled.div`
 	})};
 	min-height: 97vh;
 	overflow-x: auto;
+	z-index: 2;
 `;
 
 const SectionList = styled.div`
