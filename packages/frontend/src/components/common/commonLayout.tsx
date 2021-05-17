@@ -68,8 +68,10 @@ const ContentsSection = styled.div`
 	&:after {
 		content: '';
 		position: fixed;
+		${mq({
+			bottom: ['-180px', '0'],
+		})};
 		right: 15px;
-		bottom: 0;
 		width: 50%;
 		height: 50%;
 		background-image: url(${doodles});

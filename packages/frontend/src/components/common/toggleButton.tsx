@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import Toggle from 'react-toggle';
+import { mq } from '../../styles/mq';
 
 interface Props {
 	isDark: boolean;
@@ -34,7 +35,11 @@ const ToggleText = styled.div`
 const ToggleSection = styled.div`
 	display: flex;
 	position: absolute;
-	top: 290px;
+	z-index: 999;
+	${mq({
+		top: ['67px', '290px'],
+	})}
+
 	left: 15px;
 	height: 30px;
 	margin-top: 15px;
