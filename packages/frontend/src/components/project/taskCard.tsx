@@ -15,9 +15,10 @@ interface Props {
 	isDragging?: boolean;
 	order: string;
 	sectionId: number;
+	setSectionId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
+const TaskCard = ({ task, order, sectionId, isDragging = false, setSectionId }: Props) => {
 	const [updateTaskMutation] = useUpdateTaskContentMutation({
 		refetchQueries: [{ query: GetSectionsDocument }],
 	});
@@ -32,12 +33,14 @@ const TaskCard = ({ task, order, sectionId, isDragging = false }: Props) => {
 	}, [task]);
 
 	const setModal = (value: boolean) => () => {
+		if (value) setSectionId(sectionId);
 		setModalOpen(value);
 	};
 
 	const resetContent = () => {
 		setModalOpen(false);
 		setContent(task.content);
+		setSectionId(-1);
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

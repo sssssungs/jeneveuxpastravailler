@@ -67,14 +67,12 @@ const Project = () => {
 
 	const dragStart = async e => {
 		setIsDragging(true);
-		console.log('starts');
 		// console.log('start, e', e);
 	};
 	//
 	const dragEnd = async e => {
 		setIsDragging(false);
 		// console.log('end setTargetSectionId', targetSectionId);
-		console.log('dragend', e);
 		// console.log('end, e', e);
 		// const { oldIndex, newIndex } = e;
 		// const { getTasks } = _cloneDeep(ac.readQuery({ query: GetTasksDocument }));
@@ -142,6 +140,7 @@ const Project = () => {
 						<AddButton
 							onClick={() => setModal(true, section.id)}
 							taskLength={section.tasks.length}
+							showAddButton={sectionId === section.id}
 						/>
 						<DeleteButton
 							onClick={onClickDeleteSection(section.id)}
@@ -167,6 +166,7 @@ const Project = () => {
 											order={String(task.order)}
 											sectionId={section.id}
 											isDragging={isDragging}
+											setSectionId={setSectionId}
 										/>
 									))}
 								</ReactSortable>

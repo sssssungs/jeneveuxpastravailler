@@ -5,14 +5,19 @@ import { mq } from '../../styles/mq';
 interface Props {
 	onClick: (value: boolean) => void;
 	taskLength: number;
+	showAddButton: boolean;
 }
 
-const AddButton = ({ onClick, taskLength }: Props) => {
+const AddButton = ({ onClick, taskLength, showAddButton = false }: Props) => {
 	const clickAddButton = () => {
 		onClick(true);
 	};
 	return (
-		<AddButtonWrapper onClick={clickAddButton} taskLength={taskLength}>
+		<AddButtonWrapper
+			onClick={clickAddButton}
+			taskLength={taskLength}
+			showAddButton={showAddButton}
+		>
 			+
 		</AddButtonWrapper>
 	);
@@ -20,8 +25,8 @@ const AddButton = ({ onClick, taskLength }: Props) => {
 
 export default AddButton;
 
-export const AddButtonWrapper = styled.button<{ taskLength: number }>`
-	display: ${props => (props.taskLength !== 0 ? 'none' : 'block')};
+export const AddButtonWrapper = styled.button<{ taskLength: number; showAddButton: boolean }>`
+	display: ${props => (props.showAddButton ? 'block' : props.taskLength !== 0 ? 'none' : 'block')};
 	justify-content: center;
 	align-items: center;
 	${mq({
