@@ -75,9 +75,12 @@ const SectionTitleModify = styled.input`
 const SectionLayout = styled.div<{ currentSectionId: number; mySectionId: number }>`
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: initial;
 	//height: fit-content;
-	margin-right: ${props => props.theme.spacing.xl};
+	${props =>
+		mq({
+			marginRight: [null, props.theme.spacing.xl],
+		})}
 	&:hover {
 		${AddButtonWrapper} {
 			display: block;

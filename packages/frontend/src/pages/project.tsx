@@ -194,7 +194,7 @@ const SectionWrapper = styled.div`
 	${mq({
 		flexDirection: ['column', 'row'],
 		maxWidth: ['100%', '1400px'],
-		width: ['100%', 'inherit'],
+		width: ['100%'],
 	})};
 	min-height: 97vh;
 	overflow-x: auto;
