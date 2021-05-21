@@ -50,6 +50,7 @@ type Mutation {
   changeTaskOrder(changeObject: TaskChange!): [TaskDto!]!
   createSection(newData: CreateSectionInput!): Section!
   updateSectionName(newData: UpdateSectionName!): Section!
+  deleteSection(sectionId: Float!): Boolean!
 }
 
 input TaskInput {

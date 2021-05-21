@@ -25,4 +25,10 @@ export class SectionService {
 		foundSection.name = newData.name;
 		return await this.sectionRepository.save(foundSection);
 	};
+
+	deleteSection = async (sectionId: number) => {
+		const section = await this.sectionRepository.findOne({ id: sectionId });
+		await this.sectionRepository.remove(section);
+		return true;
+	};
 }

@@ -5,6 +5,7 @@ import {
 	GetSectionsDocument,
 	Task,
 	useCreateTaskMutation,
+	useDeleteSectionMutation,
 	useGetSectionsQuery,
 } from 'generated/graphql';
 import { Modal } from 'react-responsive-modal';
@@ -18,6 +19,7 @@ import styled from '@emotion/styled';
 import AddSectionButton from '../components/project/addSectionButton';
 import DeleteButton from '../components/project/deleteButton';
 import { mq } from 'styles/mq';
+import _find from 'lodash/find';
 
 const Project = () => {
 	const { data } = useGetSectionsQuery();
@@ -28,6 +30,10 @@ const Project = () => {
 	const [isDragging, setIsDragging] = React.useState<boolean>(false);
 
 	const [createTaskMutation] = useCreateTaskMutation({
+		refetchQueries: [{ query: GetSectionsDocument }],
+	});
+
+	const [deleteSectionMutation] = useDeleteSectionMutation({
 		refetchQueries: [{ query: GetSectionsDocument }],
 	});
 
@@ -70,7 +76,7 @@ const Project = () => {
 		// console.log('end setTargetSectionId', targetSectionId);
 		console.log('dragend', e);
 		// console.log('end, e', e);
-		const { oldIndex, newIndex } = e;
+		// const { oldIndex, newIndex } = e;
 		// const { getTasks } = _cloneDeep(ac.readQuery({ query: GetTasksDocument }));
 		// [getTasks[oldIndex], getTasks[newIndex]] = [getTasks[newIndex], getTasks[oldIndex]];
 		// await changeTaskOrderMutation({
@@ -90,8 +96,17 @@ const Project = () => {
 		// });
 	};
 	const onMouseUp = e => {
-		console.log('targetSection on mouse up', e.currentTarget);
 		setTargetSectionId(Number(targetSectionId));
+	};
+
+	const onClickDeleteSection = (sectionId: number) => async () => {
+		const { getSections } = data;
+		const hasTasks = (_find(getSections, { id: sectionId }) ?? []).length > 0;
+		if (hasTasks) {
+			window.alert('nope');
+			return;
+		}
+		await deleteSectionMutation({ variables: { sectionId } });
 	};
 
 	return (
@@ -129,7 +144,7 @@ const Project = () => {
 							taskLength={section.tasks.length}
 						/>
 						<DeleteButton
-							onClick={() => setModal(true, section.id)}
+							onClick={onClickDeleteSection(section.id)}
 							taskLength={section.tasks.length}
 						/>
 						<SectionList onMouseUp={onMouseUp} id={String(section.id)}>

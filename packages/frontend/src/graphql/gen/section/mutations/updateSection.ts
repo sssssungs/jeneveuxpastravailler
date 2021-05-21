@@ -1,10 +1,7 @@
 import { gql } from 'apollo-boost';
 
-export const updateSectionMutation = gql`
-	mutation UpdateSectionName($sectionId: Float!, $title: String!) {
-		updateSectionName(newData: { id: $sectionId, name: $title }) {
-			id
-			name
-		}
+export const deleteSectionMutation = gql`
+	mutation DeleteSection($sectionId: Float!) {
+		deleteSection(sectionId: $sectionId)
 	}
 `;

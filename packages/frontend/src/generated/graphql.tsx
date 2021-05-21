@@ -66,6 +66,7 @@ export type Mutation = {
   changeTaskOrder: Array<TaskDto>;
   createSection: Section;
   updateSectionName: Section;
+  deleteSection: Scalars['Boolean'];
 };
 
 
@@ -96,6 +97,11 @@ export type MutationCreateSectionArgs = {
 
 export type MutationUpdateSectionNameArgs = {
   newData: UpdateSectionName;
+};
+
+
+export type MutationDeleteSectionArgs = {
+  sectionId: Scalars['Float'];
 };
 
 export type TaskInput = {
@@ -156,6 +162,16 @@ export type UpdateSectionNameMutation = (
     { __typename?: 'Section' }
     & Pick<Section, 'id' | 'name'>
   ) }
+);
+
+export type DeleteSectionMutationVariables = Exact<{
+  sectionId: Scalars['Float'];
+}>;
+
+
+export type DeleteSectionMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteSection'>
 );
 
 export type GetSectionsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -311,6 +327,37 @@ export function useUpdateSectionNameMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateSectionNameMutationHookResult = ReturnType<typeof useUpdateSectionNameMutation>;
 export type UpdateSectionNameMutationResult = Apollo.MutationResult<UpdateSectionNameMutation>;
 export type UpdateSectionNameMutationOptions = Apollo.BaseMutationOptions<UpdateSectionNameMutation, UpdateSectionNameMutationVariables>;
+export const DeleteSectionDocument = gql`
+    mutation DeleteSection($sectionId: Float!) {
+  deleteSection(sectionId: $sectionId)
+}
+    `;
+export type DeleteSectionMutationFn = Apollo.MutationFunction<DeleteSectionMutation, DeleteSectionMutationVariables>;
+
+/**
+ * __useDeleteSectionMutation__
+ *
+ * To run a mutation, you first call `useDeleteSectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSectionMutation, { data, loading, error }] = useDeleteSectionMutation({
+ *   variables: {
+ *      sectionId: // value for 'sectionId'
+ *   },
+ * });
+ */
+export function useDeleteSectionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteSectionMutation, DeleteSectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteSectionMutation, DeleteSectionMutationVariables>(DeleteSectionDocument, options);
+      }
+export type DeleteSectionMutationHookResult = ReturnType<typeof useDeleteSectionMutation>;
+export type DeleteSectionMutationResult = Apollo.MutationResult<DeleteSectionMutation>;
+export type DeleteSectionMutationOptions = Apollo.BaseMutationOptions<DeleteSectionMutation, DeleteSectionMutationVariables>;
 export const GetSectionsDocument = gql`
     query GetSections {
   getSections {

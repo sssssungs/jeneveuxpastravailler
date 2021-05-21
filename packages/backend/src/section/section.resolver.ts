@@ -20,4 +20,9 @@ export class SectionResolver {
 	async updateSectionName(@Args('newData') newData: UpdateSectionName) {
 		return await this.sectionService.updateSection(newData);
 	}
+
+	@Mutation(() => Boolean)
+	async deleteSection(@Args('sectionId') sectionId: number) {
+		return await this.sectionService.deleteSection(sectionId);
+	}
 }
