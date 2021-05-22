@@ -38,12 +38,6 @@ const Project = () => {
 	});
 
 	const [targetSectionId, setTargetSectionId] = React.useState<number>(-1);
-	// const [changeTaskOrderMutation, { loading, error }] = useChangeTaskOrderMutation({
-	// 	onCompleted: a => {
-	// 		console.log('변경완료', a);
-	// 	},
-	// });
-	// const [isDragging, setIsDragging] = React.useState<boolean>(false);
 
 	const setModal = (value: boolean, sectionId?: number) => {
 		setSectionId(sectionId);
@@ -72,26 +66,6 @@ const Project = () => {
 	//
 	const dragEnd = async e => {
 		setIsDragging(false);
-		// console.log('end setTargetSectionId', targetSectionId);
-		// console.log('end, e', e);
-		// const { oldIndex, newIndex } = e;
-		// const { getTasks } = _cloneDeep(ac.readQuery({ query: GetTasksDocument }));
-		// [getTasks[oldIndex], getTasks[newIndex]] = [getTasks[newIndex], getTasks[oldIndex]];
-		// await changeTaskOrderMutation({
-		// 	variables: {
-		// 		sectionId: 0,
-		// 		selectOrder: data.getTasks[oldIndex].order,
-		// 		targetOrder: data.getTasks[newIndex].order,
-		// 	},
-		// 	update: (cache, { data }) => {
-		// 		cache.writeQuery<GetTasksQuery>({
-		// 			query: GetTasksDocument,
-		// 			data: {
-		// 				getTasks: data!.changeTaskOrder,
-		// 			},
-		// 		});
-		// 	},
-		// });
 	};
 	const onMouseUp = e => {
 		setTargetSectionId(Number(targetSectionId));
