@@ -24,7 +24,6 @@
     "facepaint": "^1.2.1",
     "file-loader": "^6.2.0",
     "graphql": "^15.5.0",
-    "konva": "^8.0.1",
     "lodash": "^4.17.21",
     "next": "10.0.8",
     "next-with-apollo": "^5.1.1",
