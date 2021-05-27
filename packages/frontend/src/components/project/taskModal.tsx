@@ -36,7 +36,6 @@ const TaskModal = ({
 	const onClickDelete = () => {
 		onDelete?.();
 	};
-
 	return (
 		<TaskModalWrapper>
 			<TaskTitle>{title}</TaskTitle>
