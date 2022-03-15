@@ -8,7 +8,7 @@ interface Props {
 	current: string;
 	children?: React.ReactNode;
 }
-
+const testValue = 1;
 const CommonLayout = ({ current, children }: Props) => {
 	return (
 		<SiteLayout>
